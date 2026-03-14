@@ -1,6 +1,6 @@
 # Purification Protocol Agent
 
-The associated paper is available to read at [link coming soon]. This application was developed at Seattle Children’s Research Institute (SCRI) which is part of Seattle Children’s Hospital (SCH) by Jeffery Ye
+The associated paper is available to read in [preprint](https://doi.org/10.64898/2026.03.03.709341). This application was developed at Seattle Children’s Research Institute (SCRI) which is part of Seattle Children’s Hospital (SCH) by Jeffery Ye
 
 This application is an AI-driven system that creates and optimizes recombinant protein purification protocols, grounded by primary citations for analogous proteins. It uses multi-agent LLM workflows and bioinformatics tools to analyze protein metadata, automatically mine literature, and generate protocols based on best practices.
 
