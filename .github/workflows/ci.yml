@@ -1,0 +1,98 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# Every job only checks out and runs local checks.
+permissions:
+  contents: read
+
+jobs:
+  backend:
+    name: Backend (lint, format, tests)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      # --locked fails if pyproject.toml and uv.lock have drifted apart.
+      - name: Install dependencies
+        run: uv sync --locked
+
+      - name: Lint
+        run: uv run ruff check .
+
+      - name: Format
+        run: uv run ruff format --check .
+
+      # conftest.py supplies dummy values for the environment variables the
+      # agent modules validate at import, so no secrets are needed here.
+      - name: Tests
+        run: uv run pytest
+
+  frontend:
+    name: Frontend (types, build)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: purification-rescue-frontend
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: purification-rescue-frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      # The wire types are generated from the backend's openapi.json, which the
+      # backend tests keep current (#46).
+      - name: Generated API types are current
+        run: |
+          npm run gen:api
+          git diff --exit-code -- src/lib/types/openapi.d.ts
+
+      - name: Type check
+        run: npm run check
+
+      - name: Test
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      # The protocol Markdown needs @tailwindcss/typography. Losing the plugin still
+      # builds, so check the built CSS for the `prose` styles explicitly.
+      - name: Typography styles in build
+        run: npm run check:prose
+
+  infra:
+    name: Terraform (format, validate)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: infra
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: 1.16.2
+
+      - name: Format
+        run: terraform fmt -check -recursive
+
+      # No backend and no credentials: this checks the configuration only.
+      - name: Validate
+        run: |
+          terraform init -backend=false -input=false
+          terraform validate

@@ -1,9 +1,12 @@
 """
 This is a pydanticai agent that extracts the raw text of protein purification protocols from PMC articles
-"""                
+"""
 
 from pydantic_ai import Agent
+
 from ..llm import reasoning_model
+from ..trace import run_traced
+
 
 class ExtractionAgent:
     def __init__(self):
@@ -32,7 +35,9 @@ class ExtractionAgent:
         )
 
     def run(self, methods: str, protein_name: str):
-        protocol_text = self.agent.run_sync(f"Protein name: {protein_name}\n\nText:\n{methods}").output
+        protocol_text = run_traced(
+            self.agent, "extraction", f"Protein name: {protein_name}\n\nText:\n{methods}"
+        ).output
 
         if protocol_text and protocol_text != "ERROR::NO_PROTOCOL_FOUND":
             return protocol_text

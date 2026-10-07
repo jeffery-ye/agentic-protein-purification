@@ -1,0 +1,7 @@
+[Unit]
+Description=Email the alert topic that %i failed
+
+# Started through OnFailure= (#100). The instance role may publish to this topic only.
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/aws sns publish --region us-east-1 --topic-arn ${alert_topic_arn} --subject "ppr: %i failed" --message "%i failed on %H. See journalctl -u %i on the instance."

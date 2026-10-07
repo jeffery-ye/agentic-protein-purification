@@ -1,18 +1,111 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn-svelte/tailwind.css';
 
-@theme {
-    --font-sans: 'Inter', system-ui, sans-serif;
-}
+/* Renders the synthesized protocol Markdown (`prose` in ProtocolViewer). Tailwind 4
+   loads plugins here, not from a config file; scripts/check-prose.mjs fails the build
+   in CI if these styles go missing. */
+@plugin '@tailwindcss/typography';
 
+/* The app is light-only. Without this, shadcn-svelte's `dark:` classes would follow the
+   OS setting; with it they apply only under a `.dark` ancestor, which is never set. */
+@custom-variant dark (&:is(.dark *));
+
+/* Theme tokens: the project palette mapped onto shadcn-svelte's variables, so the
+   components in src/lib/components/ui match the hand-built ones. Gray values are the
+   Tailwind 3 grays the existing components were designed with. The radius scale is
+   left at Tailwind's defaults so existing `rounded-*` classes keep their size. See style.md. */
 :root {
-    color-scheme: light;
-    /* Force light mode */
+  color-scheme: light;
+
+  --background: #ffffff;
+  --foreground: #3c4649; /* body text */
+  --card: #ffffff;
+  --card-foreground: #3c4649;
+  --popover: #ffffff;
+  --popover-foreground: #3c4649;
+  --primary: #333366; /* nav bar, headings, links, table rules */
+  --primary-foreground: #ffffff;
+  --primary-hover: #444488;
+  --secondary: #f3f4f6; /* gray-100 */
+  --secondary-foreground: #333366;
+  --muted: #f9fafb; /* gray-50: panels, zebra rows */
+  --muted-foreground: #6b7280; /* gray-500: secondary text */
+  --accent: #eef2ff; /* indigo-50: highlighted items, status pill */
+  --accent-foreground: #333366;
+  --destructive: #dc2626; /* red-600 */
+  --border: #e5e7eb; /* gray-200 */
+  --input: #d1d5db; /* gray-300: form field borders */
+  --ring: #333366;
 }
 
-body {
-    font-family: var(--font-sans);
-    background-color: white;
-    color: #3C4649;
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--primary-hover);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+@layer base {
+  /* Tailwind 4 defaults borders to currentColor; keep Tailwind 3's gray-200. */
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background font-sans text-foreground;
+  }
+
+  /* Tailwind 3 defaults that Tailwind 4 dropped, kept so the pages look and feel the same. */
+  input::placeholder,
+  textarea::placeholder {
+    color: #9ca3af; /* gray-400 */
+  }
+
+  input,
+  textarea,
+  select {
+    background-color: #ffffff;
+  }
+
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+@media print {
+  /* Prevent Chrome/Safari from flattening links inside overflow containers */
+  body * {
+    overflow: visible !important;
+  }
+  a {
+    text-decoration: underline !important;
+    color: #333366 !important;
+  }
+  table,
+  tr,
+  td,
+  th {
+    page-break-inside: auto;
+  }
 }

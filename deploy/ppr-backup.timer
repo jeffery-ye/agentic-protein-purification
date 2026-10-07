@@ -1,0 +1,9 @@
+[Unit]
+Description=Nightly job database copy, 30 minutes before the 08:00 UTC snapshot
+
+[Timer]
+OnCalendar=*-*-* 07:30:00 UTC
+Persistent=true
+
+[Install]
+WantedBy=timers.target

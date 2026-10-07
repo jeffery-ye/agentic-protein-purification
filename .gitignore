@@ -11,6 +11,12 @@ venv.bak/
 # BLAST+ Database
 pdbaa
 
+# Local application state: the dev job database (DATA_DIR default)
+/data/
+
+# Confidential peer-review material — local reference only, never distributed
+docs/publication_information/
+
 # Logs
 logs
 *.log
@@ -26,8 +32,13 @@ dist-ssr
 *.local
 
 __pycache__/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
 
-# Editor directories and files
+# Editor and agent directories and files
+.claude/
 .vscode/*
 !.vscode/extensions.json
 .idea
@@ -37,3 +48,11 @@ __pycache__/
 *.njsproj
 *.sln
 *.sw?
+
+# Terraform (keep .terraform.lock.hcl committed)
+infra/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+infra/tfplan

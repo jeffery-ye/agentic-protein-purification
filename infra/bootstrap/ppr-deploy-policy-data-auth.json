@@ -1,0 +1,77 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "EBSCreateVolumesAndSnapshots",
+      "Effect": "Allow",
+      "Action": ["ec2:CreateVolume", "ec2:CreateSnapshot"],
+      "Resource": "*",
+      "Condition": {"StringEquals": {"aws:RequestedRegion": "us-east-1"}}
+    },
+    {
+      "Sid": "EBSChangeOnlyTaggedPpr",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:AttachVolume",
+        "ec2:DetachVolume",
+        "ec2:ModifyVolume",
+        "ec2:DeleteVolume",
+        "ec2:DeleteSnapshot"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "StringEquals": {"aws:RequestedRegion": "us-east-1", "aws:ResourceTag/Project": "ppr"}
+      }
+    },
+    {
+      "Sid": "DLMSnapshotPolicies",
+      "Effect": "Allow",
+      "Action": [
+        "dlm:CreateLifecyclePolicy", "dlm:GetLifecyclePolicy", "dlm:GetLifecyclePolicies",
+        "dlm:UpdateLifecyclePolicy", "dlm:DeleteLifecyclePolicy",
+        "dlm:TagResource", "dlm:UntagResource", "dlm:ListTagsForResource"
+      ],
+      "Resource": "*",
+      "Condition": {"StringEquals": {"aws:RequestedRegion": "us-east-1"}}
+    },
+    {
+      "Sid": "IAMPassPprRolesToDLM",
+      "Effect": "Allow",
+      "Action": "iam:PassRole",
+      "Resource": "arn:aws:iam::*:role/ppr-*",
+      "Condition": {"StringEquals": {"iam:PassedToService": "dlm.amazonaws.com"}}
+    },
+    {
+      "Sid": "CognitoUserPools",
+      "Effect": "Allow",
+      "Action": [
+        "cognito-idp:CreateUserPool", "cognito-idp:DeleteUserPool", "cognito-idp:DescribeUserPool",
+        "cognito-idp:UpdateUserPool", "cognito-idp:ListUserPools",
+        "cognito-idp:GetUserPoolMfaConfig", "cognito-idp:SetUserPoolMfaConfig",
+        "cognito-idp:CreateUserPoolClient", "cognito-idp:DescribeUserPoolClient",
+        "cognito-idp:UpdateUserPoolClient", "cognito-idp:DeleteUserPoolClient",
+        "cognito-idp:ListUserPoolClients",
+        "cognito-idp:CreateUserPoolDomain", "cognito-idp:DescribeUserPoolDomain",
+        "cognito-idp:UpdateUserPoolDomain", "cognito-idp:DeleteUserPoolDomain",
+        "cognito-idp:CreateManagedLoginBranding", "cognito-idp:DescribeManagedLoginBranding",
+        "cognito-idp:DescribeManagedLoginBrandingByClient",
+        "cognito-idp:UpdateManagedLoginBranding", "cognito-idp:DeleteManagedLoginBranding",
+        "cognito-idp:TagResource", "cognito-idp:UntagResource", "cognito-idp:ListTagsForResource"
+      ],
+      "Resource": "*",
+      "Condition": {"StringEquals": {"aws:RequestedRegion": "us-east-1"}}
+    },
+    {
+      "Sid": "CognitoUserAccounts",
+      "Effect": "Allow",
+      "Action": [
+        "cognito-idp:AdminCreateUser", "cognito-idp:AdminGetUser",
+        "cognito-idp:AdminSetUserPassword", "cognito-idp:AdminUpdateUserAttributes",
+        "cognito-idp:AdminDisableUser", "cognito-idp:AdminEnableUser",
+        "cognito-idp:AdminDeleteUser", "cognito-idp:AdminUserGlobalSignOut",
+        "cognito-idp:ListUsers"
+      ],
+      "Resource": "arn:aws:cognito-idp:us-east-1:*:userpool/*"
+    }
+  ]
+}

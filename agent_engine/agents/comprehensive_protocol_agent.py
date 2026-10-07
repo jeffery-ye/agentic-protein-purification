@@ -1,5 +1,8 @@
 from pydantic_ai import Agent
+
 from ..llm import reasoning_model
+from ..trace import run_traced
+
 
 class SuggestedProtocolAgent:
     """
@@ -7,9 +10,10 @@ class SuggestedProtocolAgent:
     1. PlannerAgent: Analyzes data and drafts a raw strategy (CoT).
     2. FormatterAgent: Reviews the draft and structures it into a final protocol.
     """
+
     def __init__(self):
         self.reasoning_model = reasoning_model
-        
+
         self.planner_agent = Agent(
             model=self.reasoning_model,
             output_type=str,
@@ -40,21 +44,35 @@ class SuggestedProtocolAgent:
 
     def _construct_planner_prompt(self, purifications: list, failed_purification, target_metadata):
         input_string = ""
-        
+
         if target_metadata:
             input_string += "### TARGET METADATA\n"
-            input_string += f"Organism: {target_metadata.get('organism', 'Unknown')}\n"
-            input_string += f"Location: {', '.join(target_metadata.get('comments', []))}\n"
-            if target_metadata.get('features'):
-                input_string += "Features: " + ", ".join(target_metadata['features']) + "\n"
-        
+            if target_metadata.get("organism"):
+                input_string += f"Organism: {target_metadata['organism']}\n"
+            if target_metadata.get("comments"):
+                input_string += f"Location: {', '.join(target_metadata['comments'])}\n"
+            if target_metadata.get("features"):
+                input_string += "Features: " + ", ".join(target_metadata["features"]) + "\n"
+            if target_metadata.get("theoretical_pi") is not None:
+                input_string += (
+                    f"Theoretical pI: {target_metadata['theoretical_pi']}"
+                    " (computed from the full input sequence)\n"
+                )
+            if target_metadata.get("molecular_weight_da") is not None:
+                input_string += (
+                    f"Molecular weight: {target_metadata['molecular_weight_da']} Da"
+                    " (computed from the full input sequence)\n"
+                )
+
         input_string += "\n### REFERENCE PROTOCOLS\n"
         if failed_purification:
-            input_string += f"FAILED ATTEMPT:\n{failed_purification['purification_text']}\n"
-            
+            input_string += f"FAILED ATTEMPT:\n{failed_purification.purification_text}\n"
+
         if purifications:
             for p in purifications:
-                input_string += f"SUCCESSFUL ({p.get('organism_name', 'Unknown')}):\n{p['purification_text']}\n"
+                input_string += (
+                    f"SUCCESSFUL ({p.organism_name or 'Unknown'}):\n{p.purification_text}\n"
+                )
         else:
             input_string += "No successful protocols found.\n"
 
@@ -62,18 +80,18 @@ class SuggestedProtocolAgent:
         ### SYSTEM PERSONA & MISSION
         You are a Principal Scientist in Protein Biochemistry. Your task is to develop a comprehensive, end-to-end recombinant protein expression and purification strategy. You must focus on rigorous biochemical derivation and logical consistency. Output your step-by-step reasoning (Chain of Thought), followed by the final technical draft. Do not include conversational filler.
 
-        ### UNIVERSAL PURIFICATION LAWS (CRITICAL CONSTRAINTS)
-        You must strictly adhere to the following biochemical laws. Violation of these laws will result in protocol failure:
-        1. **The pI Rule:** Buffer pH must be at least 1.0 to 1.5 units away from the target protein's isoelectric point (pI) to prevent precipitation. Never set buffer pH equal to the pI.
-        2. **The Redox Rule:** Intracellular/cytosolic proteins require reducing agents (e.g., 1 mM TCEP or 1-5 mM DTT) in all buffers. Secreted/extracellular proteins with native disulfide bonds must NOT have reducing agents.
-        3. **The SEC Volume Law:** Never load more than 2% to 5% of the Total Column Volume onto a Size Exclusion Chromatography (SEC) column. You must mandate a sample concentration step prior to SEC.
-        4. **The Viscosity Law:** All cell lysis buffers must contain a nuclease (e.g., Benzonase) and its required cofactor (1-2 mM MgCl2) to degrade genomic DNA.
-        5. **The Protease Compatibility Rule:** IMAC elution fractions containing high imidazole (>50 mM) must be dialyzed or desalted prior to the addition of a site-specific protease (e.g., TEV, HRV 3C), as high imidazole inhibits cleavage.
-        6. **The Orthogonal Workflow:** Do not sequence the same separation principle back-to-back. The standard downstream hierarchy is Capture -> Intermediate/Cleavage -> Polishing.
+        ### DEFAULT PURIFICATION HEURISTICS
+        Apply these defaults unless the reference protocols or the target metadata give a reason to depart from one. They are common practice, not laws, and they are not a complete list of what can go wrong.
+        1. **pI clearance:** Set buffer pH at least 1.0 to 1.5 units away from the target protein's isoelectric point (pI) to avoid precipitation.
+        2. **Redox state:** Give intracellular/cytosolic proteins a reducing agent (e.g., 1 mM TCEP or 1-5 mM DTT) in all buffers. Leave reducing agents out for secreted/extracellular proteins with native disulfide bonds.
+        3. **SEC load volume:** Load no more than 2% to 5% of the total column volume onto a size exclusion chromatography (SEC) column, with a concentration step before SEC.
+        4. **Lysate viscosity:** Include a nuclease (e.g., Benzonase) and its cofactor (1-2 mM MgCl2) in cell lysis buffers to degrade genomic DNA.
+        5. **Protease compatibility:** Dialyze or desalt IMAC elution fractions containing high imidazole (>50 mM) before adding a site-specific protease (e.g., TEV, HRV 3C), as high imidazole inhibits cleavage.
+        6. **Orthogonal workflow:** Avoid running the same separation principle back-to-back. The usual downstream order is Capture -> Intermediate/Cleavage -> Polishing.
 
         ### STEP 1: METADATA & PHYSICOCHEMICAL DECODING
         * **Compartment & PTMs:** Is the target Cytosolic, Secreted, Transmembrane, or Nuclear? Are there known PTMs or disulfide bonds?
-        * **Properties:** Estimate/calculate the molecular weight (MW) and isoelectric point (pI). Use these to dictate resin choice and buffer pH.
+        * **Properties:** Use the theoretical pI and molecular weight (MW) from the target metadata when they are given. They are computed for the full input sequence, so adjust your reasoning for any tags, signal peptides or cleavage in your construct. If they are not given, estimate them and say they are estimates. Use these to guide resin choice and buffer pH.
         * **Historical Analysis:** Analyze provided successes/failures. Identify failure modes (e.g., inclusion bodies, degradation, low binding).
 
         ### STEP 2: UPSTREAM EXPRESSION STRATEGY
@@ -114,15 +132,17 @@ class SuggestedProtocolAgent:
         """
 
     def run(self, purifications: list, failed_purification=None, target_metadata=None):
-        planner_input = self._construct_planner_prompt(purifications, failed_purification, target_metadata)
-        
+        planner_input = self._construct_planner_prompt(
+            purifications, failed_purification, target_metadata
+        )
+
         print("Generating raw plan...")
-        raw_plan_result = self.planner_agent.run_sync(planner_input)
+        raw_plan_result = run_traced(self.planner_agent, "planner", planner_input)
         raw_plan = raw_plan_result.output
 
         formatter_input = self._construct_formatter_prompt(raw_plan)
-        
+
         print("Formatting final protocol...")
-        final_protocol_result = self.formatter_agent.run_sync(formatter_input)
-        
+        final_protocol_result = run_traced(self.formatter_agent, "formatter", formatter_input)
+
         return final_protocol_result.output, raw_plan

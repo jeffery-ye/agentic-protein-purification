@@ -1,0 +1,46 @@
+[project]
+name = "purification-rescue-agent"
+version = "0.1.0"
+description = "AI-driven system that creates and optimizes recombinant protein purification protocols, grounded by primary citations for homologous proteins."
+readme = "README.md"
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "anthropic==0.76.0",
+    "authlib>=1.8.0",
+    "biopython==1.85",
+    "fastapi[standard]>=0.115.0",
+    "itsdangerous>=2.2.0",
+    "neo4j==5.28.1",
+    "pydantic==2.12.5",
+    "pydantic-ai-slim[google,openai,anthropic,bedrock]==1.42.0",
+    "pyodbc==5.2.0",
+    "python-dotenv==1.2.1",
+    "requests==2.32.5",
+    "urllib3>=2.0",
+]
+
+[dependency-groups]
+dev = [
+    "openpyxl>=3.1.5",
+    "pytest>=8.0",
+    "ruff>=0.14",
+]
+
+# The backend runs from the repository root and imports `agent_engine` and
+# `schemas` by path, so there is nothing to build or install.
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# The project is not installed, so the repository root has to be importable.
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+# Pycodestyle errors, pyflakes, and import sorting. Deliberately conservative
+# for the initial adoption: `UP` and `B` are worth enabling once the codebase
+# has settled, but they rewrite type annotations broadly.
+select = ["E4", "E7", "E9", "F", "I"]

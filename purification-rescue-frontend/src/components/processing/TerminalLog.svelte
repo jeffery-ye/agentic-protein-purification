@@ -1,17 +1,13 @@
 <script lang="ts">
-  import { afterUpdate } from 'svelte';
   import { logStore } from "../../lib/stores/job";
-  
-  let terminalDiv: HTMLElement;
 
-  function scrollToBottom() {
-    if (terminalDiv) {
+  let terminalDiv: HTMLElement | undefined = $state();
+
+  // Keep the newest line in view: re-runs after the DOM updates for each new log entry.
+  $effect(() => {
+    if ($logStore.length && terminalDiv) {
       terminalDiv.scrollTop = terminalDiv.scrollHeight;
     }
-  }
-
-  afterUpdate(() => {
-    scrollToBottom();
   });
 </script>
 
@@ -26,7 +22,7 @@
     <div></div>
   </div>
 
-  <div 
+  <div
     bind:this={terminalDiv}
     class="flex-1 p-4 font-mono text-sm overflow-y-auto scroll-smooth bg-[#0d1117] text-gray-300"
   >

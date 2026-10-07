@@ -1,6 +1,10 @@
 <script lang="ts">
   import type { Purification, BufferStep } from '../../lib/types/api';
-  export let purifications: Purification[] = [];
+  interface Props {
+    purifications?: Purification[];
+  }
+
+  let { purifications = [] }: Props = $props();
 </script>
 
 <div>
@@ -28,21 +32,24 @@
       </div>
 
       {#if purification.protocol && purification.protocol.length > 0}
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto print:overflow-visible">
           <table class="min-w-full text-sm text-left border-collapse">
             <thead>
               <tr class="border-b-2 border-[#333366]">
+                <th class="py-2 px-3 font-bold text-[#333366]" title="Order within this protocol">#</th>
                 <th class="py-2 px-3 font-bold text-[#333366]">Step</th>
                 <th class="py-2 px-3 font-bold text-[#333366]">Buffer</th>
                 <th class="py-2 px-3 font-bold text-[#333366]">Composition</th>
                 <th class="py-2 px-3 font-bold text-[#333366]">pH</th>
-                <th class="py-2 px-3 font-bold text-[#333366]">Salt</th>
+                <th class="py-2 px-3 font-bold text-[#333366]">Salts</th>
                 <th class="py-2 px-3 font-bold text-[#333366]">Supplements</th>
               </tr>
             </thead>
             <tbody>
               {#each purification.protocol as step, j}
                 <tr class="border-b border-gray-200 {j % 2 === 0 ? 'bg-white' : 'bg-gray-50/50'}">
+                  <!-- Reports from before #71 have no step_number; their steps are in order too. -->
+                  <td class="py-2 px-3 text-gray-500 tabular-nums">{step.step_number ?? j + 1}</td>
                   <td class="py-2 px-3 text-[#3C4649] font-medium">{step.purification_step ?? '-'}</td>
                   <td class="py-2 px-3 text-[#3C4649]">{step.buffer_name ?? '-'}</td>
                   <td class="py-2 px-3 text-[#3C4649]">{step.buffer_composition ?? '-'}</td>

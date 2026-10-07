@@ -1,0 +1,10 @@
+# Copy to terraform.tfvars (gitignored) and fill in. Never commit the copy.
+
+# The newest Amazon Linux 2023 arm64 AMI (ppr-deploy can't read AWS's public SSM parameters):
+#   aws ec2 describe-images --owners amazon --profile ppr-deploy \
+#     --filters "Name=name,Values=al2023-ami-2023.*-kernel-6.12-arm64" "Name=state,Values=available" \
+#     --query 'sort_by(Images,&CreationDate)[-1].[ImageId,Name]' --output text
+ami_id = "ami-xxxxxxxxxxxxxxxxx"
+
+entrez_email = "you@example.org"
+alert_email  = "you@example.org"

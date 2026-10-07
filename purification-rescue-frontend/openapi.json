@@ -1,0 +1,1526 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Purification Rescue Agent",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/auth/login": {
+      "get": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Auth Login",
+        "description": "Redirect to Cognito's managed sign-in page, then back to `next` (an app route).",
+        "operationId": "auth_login_auth_login_get",
+        "parameters": [
+          {
+            "name": "next",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Next"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/callback": {
+      "get": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Auth Callback",
+        "description": "Exchange the code, validate the ID token and start the session.",
+        "operationId": "auth_callback_auth_callback_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "get": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Auth Logout",
+        "description": "Clear the session, then end the Cognito session too.",
+        "operationId": "auth_logout_auth_logout_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Auth Me",
+        "description": "The current user, or a 401 in cognito mode without a session.",
+        "operationId": "auth_me_auth_me_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Auth Me Auth Me Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "Health",
+        "description": "Liveness check for the uptime monitor. Depends on nothing external.",
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analyze": {
+      "post": {
+        "summary": "Start Analysis",
+        "description": "Starts the agent in the background and returns a Job ID immediately.",
+        "operationId": "start_analysis_analyze_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PurificationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Start Analysis Analyze Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/status/{job_id}": {
+      "get": {
+        "summary": "Get Status",
+        "description": "Polled by the frontend to check progress.\n\n`state` is the job's lifecycle state and `progress` its latest message;\n`history` replays every message so far. `error` is set once the job has\nfailed or been interrupted. Another user's job is a 404.",
+        "operationId": "get_status_status__job_id__get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/result/{job_id}": {
+      "get": {
+        "summary": "Get Result",
+        "description": "Retrieves the final detailed report.\n\nA stored result that no longer fits ProtocolResult (its shape changed after\nthe job ran) is returned as stored; the frontend decides whether it can\nrender it. Another user's job is a 404.",
+        "operationId": "get_result_result__job_id__get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProtocolResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trace/{job_id}": {
+      "get": {
+        "summary": "Get Trace",
+        "description": "The job's trace (#77): each LLM call's reasoning summary, output, tokens,\ntime and estimated cost, and each stage's time. Kept out of the report so\n/result stays small. null for a job with no trace: one that ran before\ntraces existed, or is still running. Another user's job is a 404.",
+        "operationId": "get_trace_trace__job_id__get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/Trace"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "title": "Response Get Trace Trace  Job Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jobs": {
+      "get": {
+        "summary": "List Jobs",
+        "description": "The current user's jobs, newest first (My Jobs).",
+        "operationId": "list_jobs_jobs_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/JobListItem"
+                  },
+                  "type": "array",
+                  "title": "Response List Jobs Jobs Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jobs/{job_id}": {
+      "patch": {
+        "summary": "Rename Job",
+        "description": "Rename one of the user's jobs, running or not. A blank name clears it, so\nMy Jobs shows the input summary again. Another user's job is a 404.",
+        "operationId": "rename_job_jobs__job_id__patch",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RenameJobRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobListItem"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Job",
+        "description": "Hard-delete one of the user's finished, failed or interrupted jobs. Another\nuser's job is a 404; a queued or running one is a 409, since jobs can't be\ncancelled (#49).",
+        "operationId": "delete_job_jobs__job_id__delete",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jobs/delete": {
+      "post": {
+        "summary": "Delete Jobs",
+        "description": "Delete several of the user's jobs. Running jobs and ones that aren't the\nuser's are skipped and listed with the reason, rather than failing the rest.",
+        "operationId": "delete_jobs_jobs_delete_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BulkDeleteRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BulkDeleteResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BufferStep": {
+        "properties": {
+          "purification_step": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Purification Step",
+            "description": "A highly specific name for the purification step. Combine the exact technique or resin name from the text with the action (e.g., Lysis, Wash, Elution). Examples: 'Ni-NTA Affinity Chromatography - Wash', 'Cell Extraction'."
+          },
+          "buffer_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Buffer Name",
+            "description": "The specific name given to the buffer in the text, if any (e.g., 'Buffer A', 'Lysis Buffer')."
+          },
+          "buffer_composition": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Buffer Composition",
+            "description": "List buffering agents and their concentrations (e.g., '50 mM Tris', '20 mM HEPES'). If not specified, leave as null."
+          },
+          "ph": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ph",
+            "description": "The pH of the buffer, as a number (e.g., 8.0). If not mentioned, leave as null."
+          },
+          "salt_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Salt Type",
+            "description": "List ALL salts with their concentrations as the text states them, for example '300 mM NaCl, 5 mM MgCl2'. Give a salt's name alone only when the text gives no concentration for it."
+          },
+          "buffer_supplement": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Buffer Supplement",
+            "description": "List additives present in the buffer like reducing agents (DTT), nucleotides (ATP), detergents, or cryoprotectants (glycerol). For example: '2 mM DTT, 30mM imidazole'."
+          },
+          "step_number": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Step Number"
+          }
+        },
+        "type": "object",
+        "required": [
+          "purification_step"
+        ],
+        "title": "BufferStep",
+        "description": "A buffer step in the report: what the model extracted, and where it sits."
+      },
+      "BulkDeleteRequest": {
+        "properties": {
+          "ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 500,
+            "minItems": 1,
+            "title": "Ids"
+          }
+        },
+        "type": "object",
+        "required": [
+          "ids"
+        ],
+        "title": "BulkDeleteRequest"
+      },
+      "BulkDeleteResult": {
+        "properties": {
+          "deleted": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Deleted"
+          },
+          "skipped": {
+            "items": {
+              "$ref": "#/components/schemas/SkippedJob"
+            },
+            "type": "array",
+            "title": "Skipped"
+          }
+        },
+        "type": "object",
+        "required": [
+          "deleted",
+          "skipped"
+        ],
+        "title": "BulkDeleteResult"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "Hit": {
+        "properties": {
+          "protein_name": {
+            "type": "string",
+            "title": "Protein Name"
+          },
+          "pdb_id": {
+            "type": "string",
+            "title": "Pdb Id"
+          },
+          "length": {
+            "type": "integer",
+            "title": "Length"
+          },
+          "e_value": {
+            "type": "number",
+            "title": "E Value"
+          },
+          "pident": {
+            "type": "number",
+            "title": "Pident"
+          },
+          "query_coverage": {
+            "type": "number",
+            "title": "Query Coverage"
+          },
+          "query_start": {
+            "type": "integer",
+            "title": "Query Start"
+          },
+          "query_end": {
+            "type": "integer",
+            "title": "Query End"
+          },
+          "subject_start": {
+            "type": "integer",
+            "title": "Subject Start"
+          },
+          "subject_end": {
+            "type": "integer",
+            "title": "Subject End"
+          },
+          "similarity_score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Similarity Score"
+          },
+          "uniprot_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Uniprot Id"
+          },
+          "organism_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Organism Name"
+          },
+          "taxonomy_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Taxonomy Id"
+          },
+          "status": {
+            "$ref": "#/components/schemas/HitStatus",
+            "default": "Not Analyzed"
+          },
+          "pmid": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pmid"
+          }
+        },
+        "type": "object",
+        "required": [
+          "protein_name",
+          "pdb_id",
+          "length",
+          "e_value",
+          "pident",
+          "query_coverage",
+          "query_start",
+          "query_end",
+          "subject_start",
+          "subject_end"
+        ],
+        "title": "Hit",
+        "description": "One BLAST hit against pdbaa, ranked and then followed to its paper."
+      },
+      "HitStatus": {
+        "type": "string",
+        "enum": [
+          "Not Analyzed",
+          "No RCSB Metadata",
+          "Citation Lookup Failed",
+          "No PMC Primary Citation",
+          "Paper Already Found",
+          "No Open Access",
+          "PMC Retrieval Failed",
+          "No Protocol Found in Paper",
+          "Protocol Found",
+          "Error Processing"
+        ],
+        "title": "HitStatus",
+        "description": "Where a hit's search for a protocol ended. The value is also its display\nlabel, so this is the one place a status is worded. The frontend matches\nsome of them exactly (BlastResults.getStatusIcon)."
+      },
+      "JobListItem": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name",
+            "description": "The owner's name for the job, if set"
+          },
+          "input_summary": {
+            "type": "string",
+            "title": "Input Summary",
+            "description": "The protein name, ID or FASTA header"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "queued",
+              "running",
+              "completed",
+              "failed",
+              "interrupted"
+            ],
+            "title": "State"
+          },
+          "progress": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Progress"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          },
+          "started_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Started At"
+          },
+          "finished_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Finished At"
+          },
+          "runtime_seconds": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Runtime Seconds",
+            "description": "Start to finish, or start to now while running"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "input_summary",
+          "state",
+          "created_at"
+        ],
+        "title": "JobListItem",
+        "description": "One row of GET /jobs (My Jobs)."
+      },
+      "MethodsSource": {
+        "type": "string",
+        "enum": [
+          "sections",
+          "full_text"
+        ],
+        "title": "MethodsSource",
+        "description": "Which text the extraction agent found a paper's purification text in (#29)."
+      },
+      "Paper": {
+        "properties": {
+          "pmid": {
+            "type": "string",
+            "title": "Pmid"
+          },
+          "pmcid": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pmcid"
+          },
+          "doi": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Doi"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "journal": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Journal"
+          },
+          "year": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Year"
+          },
+          "abstract": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Abstract"
+          },
+          "access": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PaperAccess"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "methods_source": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/MethodsSource"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "for_manual_review": {
+            "type": "boolean",
+            "title": "For Manual Review",
+            "description": "A paper the pipeline couldn't read because it isn't open access, listed\nwith its title, abstract and link so the user can read it (#47).",
+            "readOnly": true
+          },
+          "link": {
+            "type": "string",
+            "title": "Link",
+            "description": "The PMC page, else the DOI, else PubMed.",
+            "readOnly": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "pmid",
+          "for_manual_review",
+          "link"
+        ],
+        "title": "Paper",
+        "description": "A hit's primary citation, from RCSB, and what the pipeline could read of it."
+      },
+      "PaperAccess": {
+        "type": "string",
+        "enum": [
+          "open",
+          "pmc_restricted",
+          "not_in_pmc",
+          "fetch_failed"
+        ],
+        "title": "PaperAccess",
+        "description": "How much of a paper the pipeline could read. Unset until checked."
+      },
+      "ProtocolResult": {
+        "properties": {
+          "purifications": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/SourceProtocol"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Purifications"
+          },
+          "comprehensive_protocol": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Comprehensive Protocol"
+          },
+          "raw_plan": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Raw Plan"
+          },
+          "blast_results": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/Hit"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Blast Results"
+          },
+          "papers": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/Paper"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Papers"
+          },
+          "error_message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error Message"
+          },
+          "synthesis_skipped": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Synthesis Skipped"
+          }
+        },
+        "type": "object",
+        "title": "ProtocolResult",
+        "description": "A job's report, as stored and as /result serves it. Stored reports are never\nmigrated, so fields added later are optional; see \"Changing the\nreport\" in docs/system_runbooks/backend.md."
+      },
+      "PurificationRequest": {
+        "properties": {
+          "fasta_id": {
+            "type": "string",
+            "maxLength": 20000,
+            "minLength": 1,
+            "title": "Fasta Id",
+            "description": "Protein FASTA sequence or ID"
+          },
+          "failed_purification_text": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 20000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Failed Purification Text",
+            "description": "User-provided failed purification text to override CTTdb lookup"
+          },
+          "min_percent_identity": {
+            "type": "number",
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Min Percent Identity",
+            "default": 90.0
+          },
+          "min_query_coverage": {
+            "type": "number",
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Min Query Coverage",
+            "default": 90.0
+          },
+          "max_evalue": {
+            "type": "number",
+            "maximum": 1000.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Max Evalue",
+            "default": 1e-05
+          },
+          "max_hits": {
+            "type": "integer",
+            "maximum": 50.0,
+            "minimum": 1.0,
+            "title": "Max Hits",
+            "default": 10
+          },
+          "max_protocols": {
+            "type": "integer",
+            "maximum": 5.0,
+            "minimum": 1.0,
+            "title": "Max Protocols",
+            "description": "Source protocols to extract before the literature search stops",
+            "default": 3
+          }
+        },
+        "type": "object",
+        "required": [
+          "fasta_id"
+        ],
+        "title": "PurificationRequest"
+      },
+      "RenameJobRequest": {
+        "properties": {
+          "name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          }
+        },
+        "type": "object",
+        "title": "RenameJobRequest"
+      },
+      "SkippedJob": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "reason": {
+            "type": "string",
+            "enum": [
+              "running",
+              "not_found"
+            ],
+            "title": "Reason"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "reason"
+        ],
+        "title": "SkippedJob"
+      },
+      "SourceKind": {
+        "type": "string",
+        "enum": [
+          "paper",
+          "internal",
+          "user"
+        ],
+        "title": "SourceKind"
+      },
+      "SourceProtocol": {
+        "properties": {
+          "purification_text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Purification Text"
+          },
+          "protocol": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/BufferStep"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Protocol"
+          },
+          "article_title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Article Title"
+          },
+          "article_link": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Article Link"
+          },
+          "organism_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Organism Name"
+          },
+          "uniprot_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Uniprot Id"
+          },
+          "source": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SourceKind"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "pdb_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pdb Id"
+          }
+        },
+        "type": "object",
+        "title": "SourceProtocol",
+        "description": "A protocol the planner works from: a paper's, or the failed one."
+      },
+      "StageTime": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "seconds": {
+            "type": "number",
+            "title": "Seconds"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "seconds"
+        ],
+        "title": "StageTime"
+      },
+      "Trace": {
+        "properties": {
+          "model": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Model"
+          },
+          "steps": {
+            "items": {
+              "$ref": "#/components/schemas/TraceStep"
+            },
+            "type": "array",
+            "title": "Steps",
+            "default": []
+          },
+          "stages": {
+            "items": {
+              "$ref": "#/components/schemas/StageTime"
+            },
+            "type": "array",
+            "title": "Stages",
+            "default": []
+          },
+          "total_seconds": {
+            "type": "number",
+            "title": "Total Seconds",
+            "readOnly": true
+          },
+          "input_tokens": {
+            "type": "integer",
+            "title": "Input Tokens",
+            "readOnly": true
+          },
+          "output_tokens": {
+            "type": "integer",
+            "title": "Output Tokens",
+            "readOnly": true
+          },
+          "reasoning_tokens": {
+            "type": "integer",
+            "title": "Reasoning Tokens",
+            "readOnly": true
+          },
+          "cost_usd": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cost Usd",
+            "description": "The estimated total, or None when any step's model has no price.",
+            "readOnly": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "total_seconds",
+          "input_tokens",
+          "output_tokens",
+          "reasoning_tokens",
+          "cost_usd"
+        ],
+        "title": "Trace"
+      },
+      "TraceStep": {
+        "properties": {
+          "agent": {
+            "type": "string",
+            "enum": [
+              "extraction",
+              "structuring",
+              "planner",
+              "formatter"
+            ],
+            "title": "Agent"
+          },
+          "subject": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Subject"
+          },
+          "source_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Key"
+          },
+          "model": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Model"
+          },
+          "reasoning": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reasoning"
+          },
+          "output": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Output"
+          },
+          "seconds": {
+            "type": "number",
+            "title": "Seconds"
+          },
+          "input_tokens": {
+            "type": "integer",
+            "title": "Input Tokens",
+            "default": 0
+          },
+          "output_tokens": {
+            "type": "integer",
+            "title": "Output Tokens",
+            "default": 0
+          },
+          "reasoning_tokens": {
+            "type": "integer",
+            "title": "Reasoning Tokens",
+            "default": 0
+          },
+          "cost_usd": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cost Usd"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": [
+          "agent",
+          "seconds"
+        ],
+        "title": "TraceStep",
+        "description": "One LLM call."
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

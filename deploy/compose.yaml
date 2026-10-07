@@ -1,0 +1,40 @@
+# The stack on the instance: the app and Caddy. ppr-start writes app.env and
+# .env (APP_IMAGE) from Parameter Store each time the systemd unit starts.
+services:
+  app:
+    image: ${APP_IMAGE:?APP_IMAGE is set by ppr-start}
+    env_file: app.env
+    restart: unless-stopped
+    # The data volume (#24), mounted on the host by ppr-data.service.
+    volumes:
+      - /data:/data
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: us-east-1
+        awslogs-group: /ppr/app
+        awslogs-create-group: "false"
+        # A CloudWatch or credentials outage drops log lines instead of
+        # blocking the app's writes to stdout (#100).
+        mode: non-blocking
+        max-buffer-size: 4m
+
+  caddy:
+    image: caddy:2.11.4-alpine
+    restart: unless-stopped
+    # Docker's default log driver never rotates, and the root volume is 12 GB.
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - /data/caddy:/data # certificates, on the data volume
+      - caddy_config:/config
+
+volumes:
+  caddy_config:

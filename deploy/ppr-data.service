@@ -1,0 +1,14 @@
+[Unit]
+Description=Purification Rescue data volume at /data
+Before=ppr.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+# NVMe instances name EBS devices by volume ID, not /dev/sdf.
+Environment=DATA_DEVICE=/dev/disk/by-id/nvme-Amazon_Elastic_Block_Store_${volume_serial}
+ExecStart=/opt/ppr/ppr-data.sh
+TimeoutStartSec=960
+
+[Install]
+WantedBy=multi-user.target

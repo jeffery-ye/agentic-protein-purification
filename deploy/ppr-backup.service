@@ -1,0 +1,12 @@
+[Unit]
+Description=Copy the job database ahead of the daily snapshot
+# The copy runs inside the app container (#100). A run missed while the
+# instance was off waits for the stack at boot; if the stack was stopped on
+# purpose, the run fails rather than starting it.
+Requisite=ppr.service
+After=ppr.service
+OnFailure=ppr-alert@%n.service
+
+[Service]
+Type=oneshot
+ExecStart=/opt/ppr/ppr-backup.sh

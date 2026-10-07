@@ -1,0 +1,158 @@
+name: Deploy
+
+# Manual only (#23): build the image on ARM, push it to ECR, and roll the app on
+# the instance through SSM. Terraform never runs here. Rollback is this same
+# dispatch with an earlier SHA (docs/system_runbooks/deployment.md).
+on:
+  workflow_dispatch:
+    inputs:
+      sha:
+        description: Commit on main to deploy (default is the head of main)
+        required: false
+        default: ""
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+permissions:
+  id-token: write
+  contents: read
+
+# This job holds AWS credentials, so third-party actions are pinned to a commit
+# rather than a movable tag. Bump them deliberately, with the tag in the comment.
+
+env:
+  AWS_REGION: us-east-1
+  # Add your role ARN here: Terraform's github_deploy_role_arn output. Not a secret:
+  # the OIDC trust policy only lets main in your repository assume the role.
+  AWS_ROLE_ARN: arn:aws:iam::<ACCOUNT_ID>:role/ppr-github-deploy
+  ECR_REPOSITORY: ppr-app
+  INSTANCE_NAME: ppr-app
+  SITE_URL: https://app.example.org # your site's origin
+
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          fetch-depth: 0
+
+      - name: Resolve the commit
+        id: commit
+        env:
+          INPUT_SHA: ${{ inputs.sha }}
+        run: |
+          sha=$(git rev-parse --verify "${INPUT_SHA:-HEAD}^{commit}")
+          if ! git merge-base --is-ancestor "$sha" origin/main; then
+            echo "::error::$sha is not on main"
+            exit 1
+          fi
+          git checkout --quiet "$sha"
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+          echo "Deploying $sha"
+
+      - uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4.3.1
+        with:
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - uses: aws-actions/amazon-ecr-login@03f1aad4c6c7ffd436567f42f9384779290529bd # v2.1.7
+        id: ecr
+
+      - name: Check for an existing image
+        id: image
+        env:
+          SHA: ${{ steps.commit.outputs.sha }}
+          REGISTRY: ${{ steps.ecr.outputs.registry }}
+        run: |
+          echo "ref=$REGISTRY/$ECR_REPOSITORY:$SHA" >> "$GITHUB_OUTPUT"
+          # Tags are immutable, so a redeploy of a SHA reuses its image.
+          if aws ecr describe-images --repository-name "$ECR_REPOSITORY" \
+               --image-ids imageTag="$SHA" >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "Image for $SHA is already in ECR; skipping the build"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3.12.0
+        if: steps.image.outputs.exists == 'false'
+
+      - name: Build and push
+        if: steps.image.outputs.exists == 'false'
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6.19.2
+        with:
+          context: .
+          platforms: linux/arm64
+          push: true
+          provenance: false
+          tags: ${{ steps.image.outputs.ref }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Roll the app
+        env:
+          SHA: ${{ steps.commit.outputs.sha }}
+          IMAGE: ${{ steps.image.outputs.ref }}
+        run: |
+          instance=$(aws ssm describe-instance-information \
+            --filters "Key=tag:Name,Values=$INSTANCE_NAME" \
+            --query "InstanceInformationList[?PingStatus=='Online'] | [0].InstanceId" --output text)
+          if [ -z "$instance" ] || [ "$instance" = None ]; then
+            echo "::error::No online instance tagged Name=$INSTANCE_NAME"
+            exit 1
+          fi
+          echo "Instance: $instance"
+
+          # Runs shell commands on the instance and waits for them.
+          run() {
+            local id status
+            id=$(aws ssm send-command --instance-ids "$instance" \
+              --document-name AWS-RunShellScript --comment "deploy $SHA" \
+              --parameters "$(jq -nc --arg c "$1" '{commands: [$c], executionTimeout: ["900"]}')" \
+              --query Command.CommandId --output text)
+            for _ in $(seq 1 180); do
+              sleep 5
+              status=$(aws ssm get-command-invocation --command-id "$id" --instance-id "$instance" \
+                --query Status --output text 2>/dev/null || echo Pending)
+              case "$status" in Pending|InProgress|Delayed) ;; *) break ;; esac
+            done
+            aws ssm get-command-invocation --command-id "$id" --instance-id "$instance" \
+              --query '[StandardOutputContent,StandardErrorContent]' --output text
+            [ "$status" = Success ]
+          }
+
+          # 1. Pull first, so a bad image never becomes the recorded tag.
+          run "export HOME=/root && docker pull --quiet '$IMAGE'"
+          # 2. Record what's running; a replaced instance starts it on boot.
+          aws ssm put-parameter --name /ppr/IMAGE_TAG --value "$SHA" --overwrite >/dev/null
+          # 3. Tag it "live", which the ECR lifecycle policy never expires (#100).
+          #    ECR rejects a put that changes nothing, as on a redeploy.
+          image=$(aws ecr batch-get-image --repository-name "$ECR_REPOSITORY" \
+            --image-ids imageTag="$SHA" --query 'images[0]' --output json)
+          if ! out=$(aws ecr put-image --repository-name "$ECR_REPOSITORY" --image-tag live \
+                 --image-manifest "$(jq -r .imageManifest <<< "$image")" \
+                 --image-manifest-media-type "$(jq -r .imageManifestMediaType <<< "$image")" 2>&1 >/dev/null); then
+            grep -q ImageAlreadyExistsException <<< "$out" || { echo "$out" >&2; exit 1; }
+          fi
+          # 4. Restart the stack, which re-reads every /ppr/ parameter. It keeps
+          #    the old env files if Parameter Store is unreachable, so check the
+          #    image. Old images are pruned to spare the 12 GB disk.
+          run "systemctl restart ppr && cd /opt/ppr && { grep -qx 'APP_IMAGE=$IMAGE' .env || { echo 'ppr did not pick up the new image' >&2; exit 1; }; } && docker compose ps --format '{{.Service}} {{.Image}} {{.Status}}' && docker image prune -af >/dev/null"
+
+      - name: Wait for /health
+        run: |
+          for _ in $(seq 1 36); do
+            if curl -fsS --max-time 5 "$SITE_URL/health"; then
+              echo
+              echo "Healthy"
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "::error::$SITE_URL/health did not answer within 3 minutes"
+          exit 1

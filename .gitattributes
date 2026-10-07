@@ -1,0 +1,6 @@
+# Shipped to the Linux host through Terraform user data, so they must stay LF on Windows checkouts.
+deploy/** text eol=lf
+infra/** text eol=lf
+# Private working material, left out of the public release (git archive).
+docs/plans export-ignore
+.git-blame-ignore-revs export-ignore

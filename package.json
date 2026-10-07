@@ -1,0 +1,10 @@
+{
+  "name": "purification-rescue-agent",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -n backend,frontend -c blue,magenta --kill-others-on-fail \"uv run fastapi dev main.py\" \"npm run dev --prefix purification-rescue-frontend\""
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.5"
+  }
+}

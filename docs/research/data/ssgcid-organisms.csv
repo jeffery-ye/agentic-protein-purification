@@ -1,0 +1,473 @@
+species,taxonomy_id,superkingdom,class,targets,targets_in_pdb
+Burkholderia pseudomallei,320372,Bacteria,Betaproteobacteria,710,61
+Borrelia burgdorferi,224326,Bacteria,Spirochaetes,613,19
+Mycobacterium tuberculosis,83332,Bacteria,Actinobacteria,596,37
+Burkholderia thailandensis,271848,Bacteria,Betaproteobacteria,525,59
+Burkholderia cenocepacia,216591,Bacteria,Betaproteobacteria,514,48
+Mycoplasma genitalium,243273,Bacteria,Mollicutes,483,2
+Bordetella pertussis,257313,Bacteria,Betaproteobacteria,459,10
+Brucella melitensis,359391,Bacteria,Alphaproteobacteria,416,60
+Burkholderia xenovorans,266265,Bacteria,Betaproteobacteria,395,24
+Mycobacterium smegmatis,246196,Bacteria,Actinobacteria,394,51
+Mycobacterium avium,243243,Bacteria,Actinobacteria,351,30
+Burkholderia phymatum,391038,Bacteria,Betaproteobacteria,349,20
+Burkholderia ambifaria,398577,Bacteria,Betaproteobacteria,327,20
+Mycobacterium marinum,216594,Bacteria,Actinobacteria,325,31
+Burkholderia vietnamiensis,269482,Bacteria,Betaproteobacteria,322,19
+Bartonella henselae,283166,Bacteria,Alphaproteobacteria,314,30
+Burkholderia multivorans,395019,Bacteria,Betaproteobacteria,310,16
+Mycobacterium abscessus,561007,Bacteria,Actinobacteria,308,32
+Klebsiella aerogenes,1028307,Bacteria,Gammaproteobacteria,291,12
+Pseudomonas aeruginosa,208964,Bacteria,Gammaproteobacteria,291,32
+Acinetobacter baumannii,1116234,Bacteria,Gammaproteobacteria,290,33
+Mycobacterium paratuberculosis,262316,Bacteria,Actinobacteria,286,18
+Mycobacterium ulcerans,362242,Bacteria,Actinobacteria,260,12
+Klebsiella oxytoca,571,Bacteria,Gammaproteobacteria,248,1
+Mycobacterium leprae,561304,Bacteria,Actinobacteria,244,6
+Leptospira interrogans,267671,Bacteria,Spirochaetes,240,3
+Klebsiella pneumoniae,1125630,Bacteria,Gammaproteobacteria,235,27
+Anaplasma phagocytophilum,212042,Bacteria,Alphaproteobacteria,223,12
+Stenotrophomonas maltophilia,40324,Bacteria,Gammaproteobacteria,214,24
+Ehrlichia chaffeensis,205920,Bacteria,Alphaproteobacteria,201,16
+Brucella suis,204722,Bacteria,Alphaproteobacteria,196,10
+Treponema pallidum subsp. pallidum,243276,Bacteria,Spirochaetes,196,0
+Mycobacterium thermoresistibile,1078020,Bacteria,Actinobacteria,192,14
+Neisseria gonorrhoeae,521006,Bacteria,Betaproteobacteria,190,32
+Leptospira borgpetersenii,355277,Bacteria,Spirochaetes,186,6
+Brucella melitensis,224914,Bacteria,Alphaproteobacteria,185,15
+Helicobacter pylori,563041,Bacteria,Epsilonproteobacteria,173,11
+Chlamydia trachomatis,272561,Bacteria,Chlamydiia,165,8
+Brucella ovis,444178,Bacteria,Alphaproteobacteria,157,9
+Brucella melitensis,546272,Bacteria,Alphaproteobacteria,140,8
+Rickettsia prowazekii,272947,Bacteria,Alphaproteobacteria,133,9
+Leptospira interrogans,189518,Bacteria,Spirochaetes,132,0
+Brucella suis,470137,Bacteria,Alphaproteobacteria,128,4
+Mycobacterium fortuitum,1214102,Bacteria,Actinobacteria,120,3
+Elizabethkingia anophelis,1338011,Bacteria,Flavobacteriia,95,26
+Legionella pneumophila,272624,Bacteria,Gammaproteobacteria,92,25
+Rickettsia massiliae,416276,Bacteria,Alphaproteobacteria,78,0
+Rickettsia felis,315456,Bacteria,Alphaproteobacteria,74,4
+Rickettsia bellii,336407,Bacteria,Alphaproteobacteria,72,4
+Rickettsia conorii,272944,Bacteria,Alphaproteobacteria,69,1
+Burkholderia pseudomallei,272560,Bacteria,Betaproteobacteria,63,5
+Mycoplasma mycoides,2144189,Bacteria,Mollicutes,61,0
+Brucella microti,568815,Bacteria,Alphaproteobacteria,59,0
+Rickettsia rickettsii,392021,Bacteria,Alphaproteobacteria,59,3
+Bartonella quintana,283165,Bacteria,Alphaproteobacteria,55,6
+Rickettsia africae,347255,Bacteria,Alphaproteobacteria,49,2
+Rickettsia typhi,257363,Bacteria,Alphaproteobacteria,47,5
+Acinetobacter baumannii,400667,Bacteria,Gammaproteobacteria,44,4
+Brucella canis,483179,Bacteria,Alphaproteobacteria,38,2
+Burkholderia mallei,243160,Bacteria,Betaproteobacteria,38,2
+Bartonella tribocorum,382640,Bacteria,Alphaproteobacteria,37,2
+Mycobacterium bovis,233413,Bacteria,Actinobacteria,37,1
+Bartonella grahamii,634504,Bacteria,Alphaproteobacteria,36,2
+Burkholderia pseudomallei,884204,Bacteria,Betaproteobacteria,28,0
+Bartonella clarridgeiae,696125,Bacteria,Alphaproteobacteria,24,3
+Elizabethkingia meningoseptica,1216967,Bacteria,Flavobacteriia,23,5
+Bartonella sp. 1-1C,515256,Bacteria,Alphaproteobacteria,22,1
+Bartonella rochalimae,685782,Bacteria,Alphaproteobacteria,20,1
+Bartonella sp. AR 15-3,545617,Bacteria,Alphaproteobacteria,19,1
+Bartonella birtlesii,111504,Bacteria,Alphaproteobacteria,16,2
+Mycobacterium kansasii,1768,Bacteria,Actinobacteria,15,3
+Escherichia coli,83333,Bacteria,Gammaproteobacteria,13,2
+Mycobacterium gordonae,1778,Bacteria,Actinobacteria,12,0
+Treponema pallidum subsp. pallidum,161,Bacteria,Spirochaetes,12,0
+Mycobacterium intracellulare,1767,Bacteria,Actinobacteria,11,0
+Rickettsia rickettsii,783,Bacteria,Alphaproteobacteria,11,0
+Francisella tularensis subsp. tularensis,177416,Bacteria,Gammaproteobacteria,10,2
+Anaplasma marginale,770,Bacteria,Alphaproteobacteria,8,0
+Chlamydia muridarum,243161,Bacteria,Chlamydiia,7,0
+Acinetobacter baumannii,405416,Bacteria,Gammaproteobacteria,6,0
+Acinetobacter baylyi,62977,Bacteria,Gammaproteobacteria,6,0
+Bacillus anthracis,198094,Bacteria,Bacilli,5,0
+Ehrlichia ruminantium,302409,Bacteria,Alphaproteobacteria,5,1
+Klebsiella pneumoniae,573,Bacteria,Gammaproteobacteria,5,1
+Wolbachia endosymbiont of Onchocerca volvulus,77551,Bacteria,Alphaproteobacteria,5,0
+Staphylococcus aureus,196620,Bacteria,Bacilli,4,1
+Acinetobacter pittii,1217691,Bacteria,Gammaproteobacteria,3,0
+Campylobacter jejuni,192222,Bacteria,Epsilonproteobacteria,3,1
+Escherichia coli,216592,Bacteria,Gammaproteobacteria,3,1
+Gardnerella vaginalis,879307,Bacteria,Actinomycetes,3,0
+Helicobacter pylori,85962,Bacteria,Epsilonproteobacteria,3,0
+Micromonospora sp. ML1,349725,Bacteria,Actinobacteria,3,0
+Salmonella typhimurium,99287,Bacteria,Gammaproteobacteria,3,1
+Streptomyces coelicolor,100226,Bacteria,Actinobacteria,3,2
+Acinetobacter calcoaceticus,1217654,Bacteria,Gammaproteobacteria,2,0
+Amygdalobacter indicium,3029272,Bacteria,Clostridia,2,1
+Amygdalobacter nucleatus,3029274,Bacteria,Clostridia,2,1
+Bordetella bronchiseptica,518,Bacteria,Betaproteobacteria,2,0
+Borrelia turicatae,142,Bacteria,Spirochaetes,2,0
+Brucella abortus,262698,Bacteria,Alphaproteobacteria,2,0
+Chlamydia psittaci,1218354,Bacteria,Chlamydiia,2,0
+Chlamydia trachomatis,471473,Bacteria,Chlamydiia,2,1
+Clostridium botulinum,1491,Bacteria,Clostridia,2,1
+Clostridium perfringens,195102,Bacteria,Clostridia,2,0
+Fannyhessea vaginae,525256,Bacteria,Coriobacteriia,2,1
+Francisella philomiragia,484022,Bacteria,Gammaproteobacteria,2,1
+Gardnerella swidsinskii,2792979,Bacteria,Actinomycetes,2,0
+Megasphaera lornae,1000568,Bacteria,Negativicutes,2,0
+Mobiluncus curtisii,585198,Bacteria,Actinomycetes,2,0
+Mobiluncus mulieris,2052,Bacteria,Actinomycetes,2,0
+Mycobacterium sp. MCS,164756,Bacteria,Actinobacteria,2,0
+Neisseria gonorrhoeae,485,Bacteria,Betaproteobacteria,2,0
+Neisseria meningitidis,487,Bacteria,Betaproteobacteria,2,1
+Sneathia vaginalis,187101,Bacteria,Fusobacteriia,2,0
+Acinetobacter beijerinckii,262668,Bacteria,Gammaproteobacteria,1,0
+Acinetobacter haemolyticus,1217659,Bacteria,Gammaproteobacteria,1,0
+Acinetobacter lactucae,1785128,Bacteria,Gammaproteobacteria,1,0
+Acinetobacter lwoffii,1217668,Bacteria,Gammaproteobacteria,1,0
+Acinetobacter nosocomialis,106654,Bacteria,Gammaproteobacteria,1,0
+Acinetobacter seifertii,1530123,Bacteria,Gammaproteobacteria,1,0
+Acinetobacter sp. ANC 3929,1217707,Bacteria,Gammaproteobacteria,1,0
+Acinetobacter sp. ANC 4603,1873711,Bacteria,Gammaproteobacteria,1,0
+Acinetobacter sp. CIP 102637,1144669,Bacteria,Gammaproteobacteria,1,0
+Acinetobacter ursingii,108980,Bacteria,Gammaproteobacteria,1,0
+Aquifex aeolicus,63363,Bacteria,Aquificae,1,0
+Bartonella bacilliformis,360095,Bacteria,Alphaproteobacteria,1,0
+Borrelia hermsii,314723,Bacteria,Spirochaetes,1,0
+Borrelia recurrentis,412418,Bacteria,Spirochaetes,1,0
+Burkholderia ambifaria,339670,Bacteria,Betaproteobacteria,1,0
+Burkholderia gladioli,999541,Bacteria,Betaproteobacteria,1,0
+Burkholderia graminis,396598,Bacteria,Betaproteobacteria,1,0
+Burkholderia phytofirmans,398527,Bacteria,Betaproteobacteria,1,0
+Burkholderia pseudomallei,331978,Bacteria,Betaproteobacteria,1,0
+Burkholderia pseudomallei,536230,Bacteria,Betaproteobacteria,1,0
+Burkholderia pseudomallei,357348,Bacteria,Betaproteobacteria,1,0
+Burkholderia pseudomallei,320373,Bacteria,Betaproteobacteria,1,0
+Burkholderia sp. 383,269483,Bacteria,Betaproteobacteria,1,0
+Burkholderia sp. CCGE1001,640510,Bacteria,Betaproteobacteria,1,0
+Chlamydia pneumoniae,83558,Bacteria,Chlamydiia,1,1
+Clostridium bolteae,411902,Bacteria,Clostridia,1,0
+Coxiella burnetii,227377,Bacteria,Gammaproteobacteria,1,0
+Enterobacter cloacae,550,Bacteria,Gammaproteobacteria,1,0
+Enterococcus faecalis,226185,Bacteria,Bacilli,1,0
+Finegoldia magna,525282,Bacteria,Tissierellia,1,0
+Finegoldia magna,1260,Bacteria,Tissierellia,1,0
+Francisella tularensis subsp. novicida,401614,Bacteria,Gammaproteobacteria,1,0
+Gardnerella piotii,2792977,Bacteria,Actinomycetes,1,0
+Helicobacter pylori,1163743,Bacteria,Epsilonproteobacteria,1,0
+Helicobacter pylori,85963,Bacteria,Epsilonproteobacteria,1,0
+Klebsiella pneumoniae,1417983,Bacteria,Gammaproteobacteria,1,0
+Kutzneria sp. 744,345341,Bacteria,Actinobacteria,1,0
+Listeria monocytogenes,169963,Bacteria,Bacilli,1,0
+Megasphaera vaginalis,1111454,Bacteria,Negativicutes,1,0
+Moraxella catarrhalis,480,Bacteria,Gammaproteobacteria,1,1
+Nitrosomonas europaea,228410,Bacteria,Betaproteobacteria,1,1
+Parvimonas micra,411465,Bacteria,Tissierellia,1,0
+Pseudomonas aeruginosa,381754,Bacteria,Gammaproteobacteria,1,0
+Pseudomonas putida,303,Bacteria,Gammaproteobacteria,1,0
+Streptococcus pyogenes,301447,Bacteria,Bacilli,1,0
+Streptomyces lasaliensis,324833,Bacteria,Actinobacteria,1,0
+Streptomyces rishiriensis,68264,Bacteria,Actinobacteria,1,0
+Treponema pallidum subsp. pallidum,666714,Bacteria,Spirochaetes,1,0
+Verrucomicrobium spinosum,2736,Bacteria,Verrucomicrobiae,1,0
+Vibrio furnissii,29494,Bacteria,Gammaproteobacteria,1,0
+Yersinia pestis,214092,Bacteria,Gammaproteobacteria,1,0
+Entamoeba histolytica,294381,Eukaryota,Entamoebidae,418,15
+Toxoplasma gondii,508771,Eukaryota,Coccidia,261,5
+Cryptococcus neoformans,235443,Eukaryota,Tremellomycetes,242,11
+Plasmodium falciparum,36329,Eukaryota,Aconoidasida,193,8
+Cryptosporidium parvum,353152,Eukaryota,Coccidia,187,10
+Naegleria fowleri,5763,Eukaryota,Heterolobosea,187,22
+Trypanosoma cruzi,5693,Eukaryota,Kinetoplastida,186,6
+Brugia malayi,6279,Eukaryota,Chromadorea,181,4
+Leishmania major,347515,Eukaryota,Kinetoplastida,173,9
+Babesia bovis,484906,Eukaryota,Aconoidasida,159,9
+Trypanosoma brucei,185431,Eukaryota,Kinetoplastida,156,6
+Giardia lamblia,184922,Eukaryota,Diplomonadida,140,11
+Trypanosoma cruzi,353153,Eukaryota,Kinetoplastida,132,1
+Encephalitozoon cuniculi,284813,Eukaryota,Microsporidia (phylum),126,10
+Trichomonas vaginalis,412133,Eukaryota,Parabasalia,117,7
+Coccidioides immitis,246410,Eukaryota,Eurotiomycetes,108,13
+Leishmania infantum,5671,Eukaryota,Kinetoplastida,98,3
+Leishmania braziliensis,420245,Eukaryota,Kinetoplastida,90,0
+Crithidia fasciculata,5656,Eukaryota,Kinetoplastida,88,1
+Plasmodium berghei,5823,Eukaryota,Aconoidasida,83,0
+Leishmania tarentolae,5689,Eukaryota,Kinetoplastida,79,0
+Onchocerca volvulus,6282,Eukaryota,Chromadorea,79,2
+Leishmania mexicana,929439,Eukaryota,Kinetoplastida,73,0
+Cryptosporidium hominis,237895,Eukaryota,Coccidia,69,1
+Plasmodium vivax,126793,Eukaryota,Aconoidasida,69,3
+Leishmania donovani,981087,Eukaryota,Kinetoplastida,68,0
+Candida albicans,5476,Eukaryota,Saccharomycetes,57,1
+Plasmodium knowlesi,5851,Eukaryota,Aconoidasida,51,1
+Aspergillus fumigatus,5085,Eukaryota,Eurotiomycetes,50,4
+Plasmodium yoelii yoelii,73239,Eukaryota,Aconoidasida,50,0
+artificial sequences synthetic construct,32630,Eukaryota,other sequences,42,2
+Ajellomyces capsulata,5037,Eukaryota,Eurotiomycetes,35,0
+Babesia microti,1133968,Eukaryota,Aconoidasida,34,1
+Trypanosoma brucei,5691,Eukaryota,Kinetoplastida,32,0
+Aspergillus lentulus,293939,Eukaryota,Eurotiomycetes,30,0
+Sarcoptes scabiei,52283,Eukaryota,Arachnida,30,0
+Aspergillus novofumigatus,1392255,Eukaryota,Eurotiomycetes,29,0
+Candida auris,498019,Eukaryota,Saccharomycetes,29,0
+Candida pseudohaemulonii,418784,Eukaryota,Saccharomycetes,28,0
+Balamuthia mandrillaris,66527,Eukaryota,Lobosea,27,2
+Coccidioides posadasii,443226,Eukaryota,Eurotiomycetes,27,0
+Candida duobushaemulonis,1231522,Eukaryota,Saccharomycetes,26,0
+Babesia duncani,323732,Eukaryota,Aconoidasida,24,0
+Candida haemuloni,45357,Eukaryota,Saccharomycetes,24,0
+Trichuris muris,70415,Eukaryota,Nematoda,23,0
+Acanthamoeba castellanii,5755,Eukaryota,Acanthamoebidae,22,2
+Fusarium oxysporum,660029,Eukaryota,Sordariomycetes,19,0
+Leishmania donovani,5661,Eukaryota,Kinetoplastida,19,0
+Cryptococcus gattii,367775,Eukaryota,Tremellomycetes,13,0
+Coccidioides posadasii,222929,Eukaryota,Eurotiomycetes,12,1
+Mucor circinelloides,29924,Eukaryota,Mucoromycotina,11,0
+Candida glabrata,5478,Eukaryota,Saccharomycetes,8,0
+Plasmodium vivax,5855,Eukaryota,Aconoidasida,8,0
+Rhizopus delemar,246409,Eukaryota,Mucoromycotina,6,0
+Malassezia globosa,425265,Eukaryota,Exobasidiomycetes,5,0
+Plasmodium falciparum,5833,Eukaryota,Aconoidasida,5,0
+Meyerozyma guilliermondii,294746,Eukaryota,Saccharomycetes,4,0
+Mucor circinelloides,1220926,Eukaryota,Mucoromycotina,4,0
+Saccharomyces cerevisiae,4932,Eukaryota,Saccharomycetes,4,1
+Schistosoma mansoni,6183,Eukaryota,Trematoda,4,0
+Besnoitia besnoiti,94643,Eukaryota,Conoidasida,2,0
+Neospora caninum,29176,Eukaryota,Conoidasida,2,0
+Trichinella spiralis,6334,Eukaryota,Enoplea,2,0
+Anopheles gambiae,7165,Eukaryota,Insecta,1,0
+Aspergillus terreus,33178,Eukaryota,Eurotiomycetes,1,0
+Clavispora lusitaniae,306902,Eukaryota,Saccharomycetes,1,0
+Coccidioides immitis,454286,Eukaryota,Eurotiomycetes,1,0
+Cryptococcus neoformans,178876,Eukaryota,Tremellomycetes,1,0
+Cryptococcus neoformans,214684,Eukaryota,Tremellomycetes,1,0
+Cunninghamella elegans,4853,Eukaryota,Mucoromycotina,1,0
+Cyberlindnera fabianii,36022,Eukaryota,Saccharomycetes,1,0
+Cystoisospora suis,483139,Eukaryota,Conoidasida,1,0
+Encephalitozoon intestinalis,58839,Eukaryota,Microsporidia (phylum),1,0
+Giardia muris,5742,Eukaryota,Diplomonadida,1,0
+Issatchenkia orientalis,4909,Eukaryota,Saccharomycetes,1,0
+Ixodes scapularis,6945,Eukaryota,Arachnida,1,0
+Leishmania guyanensis,5670,Eukaryota,Kinetoplastida,1,0
+Madurella mycetomatis,100816,Eukaryota,Sordariomycetes,1,0
+Malassezia sympodialis,1230383,Eukaryota,Exobasidiomycetes,1,0
+Malassezia yamatoensis,253288,Eukaryota,Exobasidiomycetes,1,1
+Moniliophthora perniciosa,153609,Eukaryota,Agaricomycetes,1,0
+Naumovozyma dairenensis,1071378,Eukaryota,Saccharomycetes,1,0
+Plasmodium falciparum,137071,Eukaryota,Aconoidasida,1,0
+Pneumocystis carinii,4754,Eukaryota,Pneumocystidomycetes,1,0
+Saccharomycetaceae sp. 'Ashbya aceri',566037,Eukaryota,Saccharomycetes,1,0
+Sarcocystis neurona,42890,Eukaryota,Conoidasida,1,0
+Toxoplasma gondii,383379,Eukaryota,Coccidia,1,0
+Toxoplasma gondii,507601,Eukaryota,Coccidia,1,0
+Trichoplusia ni,7111,Eukaryota,Insecta,1,1
+unclassified Caudoviricetes unclassified,9999955,Viruses,Caudoviricetes,106,0
+unclassified Duplodnaviria unclassified,9999954,Viruses,Duplodnaviria (realm),83,0
+Betacoronavirus Human betacoronavirus 2c EMC/2012,1235996,Viruses,"ssRNA positive-strand viruses, no DNA stage",14,1
+Influenzavirus A Influenza A virus,9999995,Viruses,ssRNA negative-strand viruses,11,1
+Betacoronavirus SARS-CoV-2 (2019-nCoV) (COVID-19),2697049,Viruses,"ssRNA positive-strand viruses, no DNA stage",10,2
+Henipavirus Langya virus,2971765,Viruses,ssRNA negative-strand viruses,9,2
+Orthopoxvirus Vaccinia virus,10249,Viruses,"dsDNA viruses, no RNA stage",9,0
+ecological metagenomes human metagenome,646099,Viruses,metagenomes,9,0
+Influenzavirus D Influenza D virus,1173138,Viruses,ssRNA negative-strand viruses,8,0
+Orthopoxvirus Monkeypox virus,9999961,Viruses,"dsDNA viruses, no RNA stage",8,0
+unclassified Rhabdoviridae Bas-Congo virus,1231712,Viruses,ssRNA negative-strand viruses,8,0
+Ebolavirus Zaire ebolavirus,128952,Viruses,ssRNA negative-strand viruses,7,2
+Influenzavirus A Influenza A virus,9999996,Viruses,ssRNA negative-strand viruses,7,0
+Influenzavirus D Influenza D virus,1366619,Viruses,ssRNA negative-strand viruses,7,1
+Marburgvirus Lake Victoria marburgvirus,33727,Viruses,ssRNA negative-strand viruses,7,0
+Ebolavirus Reston ebolavirus,386032,Viruses,ssRNA negative-strand viruses,6,1
+Influenzavirus A Influenza A virus,1330368,Viruses,ssRNA negative-strand viruses,6,0
+Orthopoxvirus Monkeypox virus,619591,Viruses,"dsDNA viruses, no RNA stage",6,0
+Henipavirus Nipah virus,121791,Viruses,ssRNA negative-strand viruses,5,2
+Influenzavirus A Influenza A virus,641501,Viruses,ssRNA negative-strand viruses,5,1
+Arenavirus Lassa virus,11622,Viruses,ssRNA negative-strand viruses,4,0
+Arenavirus Machupo mammarenavirus,11628,Viruses,ssRNA negative-strand viruses,4,0
+Cuevavirus Lloviu cuevavirus,1513237,Viruses,ssRNA negative-strand viruses,4,0
+Flavivirus West Nile virus,11082,Viruses,"ssRNA positive-strand viruses, no DNA stage",4,2
+Influenzavirus A Influenza A virus,284218,Viruses,ssRNA negative-strand viruses,4,1
+Influenzavirus A Influenza A virus,88776,Viruses,ssRNA negative-strand viruses,4,0
+Influenzavirus A Influenza A virus,1318616,Viruses,ssRNA negative-strand viruses,4,0
+Influenzavirus A influenza A virus,380337,Viruses,ssRNA negative-strand viruses,4,0
+Nairovirus Crimean-Congo hemorrhagic fever virus,11593,Viruses,ssRNA negative-strand viruses,4,0
+Orthobunyavirus Oropouche virus,118655,Viruses,ssRNA negative-strand viruses,4,0
+Orthopoxvirus Cowpox virus,265872,Viruses,"dsDNA viruses, no RNA stage",4,0
+Phlebovirus Rift valley fever virus,11588,Viruses,ssRNA negative-strand viruses,4,0
+Rubulavirus Mumps virus,11161,Viruses,ssRNA negative-strand viruses,4,0
+Alphacoronavirus Human coronavirus,277944,Viruses,Pisoniviricetes,3,0
+Betacoronavirus SARS,227859,Viruses,"ssRNA positive-strand viruses, no DNA stage",3,0
+Ebolavirus Sudan ebolavirus,128948,Viruses,ssRNA negative-strand viruses,3,1
+Hantavirus Andes virus,46607,Viruses,ssRNA negative-strand viruses,3,0
+Hantavirus Hantaan virus,11602,Viruses,ssRNA negative-strand viruses,3,1
+Henipavirus Hendra virus,928303,Viruses,ssRNA negative-strand viruses,3,0
+Influenzavirus A Influenza A virus,215853,Viruses,ssRNA negative-strand viruses,3,0
+Influenzavirus A Influenza A virus,1314758,Viruses,ssRNA negative-strand viruses,3,0
+Influenzavirus A Influenza A virus,9999999,Viruses,ssRNA negative-strand viruses,3,0
+Influenzavirus A influenza A virus,119210,Viruses,ssRNA negative-strand viruses,3,1
+Lymphocryptovirus Epstein-Barr virus  (Human herpesvirus 4),10376,Viruses,"dsDNA viruses, no RNA stage",3,1
+Lyssavirus Rabies virus,103929,Viruses,ssRNA negative-strand viruses,3,1
+Orthobunyavirus Bunyamwera virus,35304,Viruses,ssRNA negative-strand viruses,3,0
+Rubulavirus Human parainfluenza 2 virus,11214,Viruses,ssRNA negative-strand viruses,3,0
+Rubulavirus La Piedad-Michoacan-Mexico virus,53179,Viruses,ssRNA negative-strand viruses,3,0
+Rubulavirus Mapuera virus,43140,Viruses,ssRNA negative-strand viruses,3,0
+Rubulavirus Simian virus 41,11228,Viruses,ssRNA negative-strand viruses,3,0
+Rubulavirus Simian virus 5,11208,Viruses,ssRNA negative-strand viruses,3,0
+Simplexvirus Human herpesvirus 1 (HHV-1),10298,Viruses,Herviviricetes,3,0
+Alphapapillomavirus Human papillomavirus,333760,Viruses,"dsDNA viruses, no RNA stage",2,0
+Alphapapillomavirus Human papillomavirus,333761,Viruses,"dsDNA viruses, no RNA stage",2,0
+Alphapapillomavirus Human papillomavirus,10585,Viruses,"dsDNA viruses, no RNA stage",2,0
+Alphapapillomavirus Human papillomavirus,10586,Viruses,"dsDNA viruses, no RNA stage",2,0
+Alphavirus Venezuelan equine encephalitis virus,11038,Viruses,"ssRNA positive-strand viruses, no DNA stage",2,0
+Betacoronavirus Bat coronavirus HKU3 (BtCoV),442736,Viruses,"ssRNA positive-strand viruses, no DNA stage",2,0
+Betacoronavirus Human coronavirus HKU1,443239,Viruses,"ssRNA positive-strand viruses, no DNA stage",2,1
+Betacoronavirus Middle East respiratory syndrome coronavirus,1263720,Viruses,"ssRNA positive-strand viruses, no DNA stage",2,0
+Cytomegalovirus Human herpesvirus 5,10359,Viruses,"dsDNA viruses, no RNA stage",2,0
+Ebolavirus Bundibugyo ebolavirus,565995,Viruses,ssRNA negative-strand viruses,2,0
+Ebolavirus Zaire ebolavirus,186538,Viruses,ssRNA negative-strand viruses,2,0
+Flavivirus Dengue virus 1,11053,Viruses,"ssRNA positive-strand viruses, no DNA stage",2,1
+Flavivirus Yellow fever virus,11090,Viruses,"ssRNA positive-strand viruses, no DNA stage",2,0
+Henipavirus Hendra henipavirus,63330,Viruses,ssRNA negative-strand viruses,2,1
+Hepacivirus Hepatitis C virus,11103,Viruses,"ssRNA positive-strand viruses, no DNA stage",2,0
+Influenzavirus A Influenza A virus,136487,Viruses,ssRNA negative-strand viruses,2,0
+Influenzavirus A Influenza A virus,643780,Viruses,ssRNA negative-strand viruses,2,1
+Influenzavirus A Influenza A virus,1332244,Viruses,ssRNA negative-strand viruses,2,0
+Influenzavirus A Influenza A virus,1395524,Viruses,ssRNA negative-strand viruses,2,0
+Influenzavirus A Influenza A virus,1129346,Viruses,ssRNA negative-strand viruses,2,0
+Influenzavirus A Influenza A virus,114727,Viruses,ssRNA negative-strand viruses,2,1
+Influenzavirus A Influenza A virus,380342,Viruses,ssRNA negative-strand viruses,2,0
+Lyssavirus Australian bat lyssavirus,446561,Viruses,ssRNA negative-strand viruses,2,0
+Lyssavirus Australian bat lyssavirus,446562,Viruses,ssRNA negative-strand viruses,2,0
+Orthobunyavirus Bunyavirus La Crosse,11577,Viruses,ssRNA negative-strand viruses,2,0
+Orthobunyavirus Dugbe virus,766194,Viruses,ssRNA negative-strand viruses,2,0
+Orthobunyavirus Imjin virus,467989,Viruses,ssRNA negative-strand viruses,2,0
+Orthobunyavirus Inkoo virus,45269,Viruses,ssRNA negative-strand viruses,2,0
+Orthobunyavirus Kupe virus,498356,Viruses,ssRNA negative-strand viruses,2,0
+Orthobunyavirus Massilia virus,391640,Viruses,ssRNA negative-strand viruses,2,0
+Orthobunyavirus Nairobi sheep disease virus,194540,Viruses,ssRNA negative-strand viruses,2,0
+Orthobunyavirus Puumala virus,11604,Viruses,ssRNA negative-strand viruses,2,0
+Orthobunyavirus Sandfly fever sicilian virus,28292,Viruses,ssRNA negative-strand viruses,2,0
+Orthobunyavirus Seoul virus,11608,Viruses,ssRNA negative-strand viruses,2,0
+Orthobunyavirus Toscana virus (Tos),11590,Viruses,ssRNA negative-strand viruses,2,0
+Orthobunyavirus Tula virus,37133,Viruses,ssRNA negative-strand viruses,2,0
+Rubulavirus Mumps virus,11173,Viruses,ssRNA negative-strand viruses,2,0
+Rubulavirus Mumps virus,11168,Viruses,ssRNA negative-strand viruses,2,0
+Seoulvirus Salmonella phage SPN3US,1090134,Viruses,"dsDNA viruses, no RNA stage",2,0
+Alphacoronavirus Canine coronavirus,11153,Viruses,Pisoniviricetes,1,1
+Alphacoronavirus Feline infectious peritonitis virus,33734,Viruses,Pisoniviricetes,1,1
+Alphacoronavirus Human coronavirus,11137,Viruses,Pisoniviricetes,1,0
+Alphacoronavirus Swine acute diarrhea syndrome coronavirus (SADS),2032731,Viruses,Pisoniviricetes,1,0
+Alphapapillomavirus Human papillomavirus,10593,Viruses,"dsDNA viruses, no RNA stage",1,0
+Alphavirus Chikungunya virus,371095,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Alphavirus Western equine encephalitis virus (WEEV),11039,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Arenavirus Junin arenavirus,11619,Viruses,ssRNA negative-strand viruses,1,0
+Betacoronavirus Bat coronavirus,2709072,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Betacoronavirus Bat coronavirus HKU5 (BtCoV),694008,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,1
+Betacoronavirus Human coronavirus,31631,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Betacoronavirus MERS-related coronavirus,1335626,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,1
+Betacoronavirus Murine hepatitis virus,11142,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Betacoronavirus Rhinolophus bat clade 3 sarbecovirus,9999960,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,1
+Betacoronavirus SARS coronavirus,230471,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,1
+Betacoronavirus SARS-CoV-2,9999976,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Betacoronavirus SARS-CoV-2,9999977,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Betacoronavirus SARS-CoV-2,9999978,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Betacoronavirus SARS-CoV-2,9999965,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Betacoronavirus SARS-CoV-2,9999969,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Betacoronavirus SARS-CoV-2,9999963,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,1
+Betacoronavirus SARS-CoV-2,9999964,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Betacoronavirus SARS-CoV-2,9999970,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Betacoronavirus SARS-CoV-2,9999973,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Betacoronavirus SARS-CoV-2,9999959,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,1
+Betacoronavirus SARS-CoV-2,9999956,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,1
+Betacoronavirus SARS-CoV-2,9999975,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Betacoronavirus SARS-CoV-2,9999967,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Betacoronavirus SARS-CoV-2,9999971,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,1
+Betacoronavirus SARS-CoV-2,9999966,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Betacoronavirus SARS-CoV-2,9999968,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,1
+Betacoronavirus SARS-CoV-2,9999972,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,1
+Betacoronavirus SARS-CoV-2,9999957,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,1
+Betacoronavirus SARS-CoV-2,9999958,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,1
+Deltacoronavirus Coronavirus HKU15,1465644,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,1
+Deltacoronavirus Coronavirus HKU15,1586324,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Ebolavirus Tai Forest ebolavirus,186541,Viruses,ssRNA negative-strand viruses,1,0
+Flavivirus Alongshan virus,2269360,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Flavivirus Dengue virus,11060,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Flavivirus Dengue virus,11069,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Flavivirus Dengue virus,11070,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Flavivirus Mogiana tick virus,1491393,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Flavivirus Zika virus,9999992,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Flavivirus Zika virus,9999993,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Flavivirus Zika virus,9999994,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Flavivirus Zika virus,64320,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Flavivirus Zika virus,9999990,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Flavivirus Zika virus,9999991,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Gammacoronavirus Infectious bronchitis virus,11120,Viruses,Pisoniviricetes,1,0
+Hantavirus Sin Nombre virus,37705,Viruses,ssRNA negative-strand viruses,1,0
+Henipavirus Cedar virus,1221391,Viruses,ssRNA negative-strand viruses,1,0
+Henipavirus Ghana virus,2847089,Viruses,ssRNA negative-strand viruses,1,1
+Hepacivirus Hepatitis C Virus,9999979,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Hepacivirus Hepatitis C Virus,356411,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Hepacivirus Hepatitis C Virus,1006436,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Hepacivirus Hepatitis C Virus,1006444,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Hepacivirus Hepatitis C Virus,9999980,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Hepacivirus Hepatitis C Virus,31647,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Hepacivirus Hepatitis C Virus,31646,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Hepacivirus Hepatitis C Virus,9999981,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Hepacivirus Hepatitis C Virus,2340906,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Hepacivirus Hepatitis C Virus,333284,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Hepacivirus Hepatitis C virus,11108,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Influenzavirus A Influenza A virus,641807,Viruses,ssRNA negative-strand viruses,1,0
+Influenzavirus A Influenza A virus,135659,Viruses,ssRNA negative-strand viruses,1,0
+Influenzavirus A Influenza A virus,211044,Viruses,ssRNA negative-strand viruses,1,0
+Influenzavirus A Influenza A virus,381518,Viruses,ssRNA negative-strand viruses,1,1
+Influenzavirus A Influenza A virus,689771,Viruses,ssRNA negative-strand viruses,1,0
+Influenzavirus A Influenza A virus,1088753,Viruses,ssRNA negative-strand viruses,1,0
+Influenzavirus A Influenza A virus,367120,Viruses,ssRNA negative-strand viruses,1,1
+Influenzavirus A Influenza A virus,767206,Viruses,ssRNA negative-strand viruses,1,0
+Influenzavirus A Influenza A virus,9999987,Viruses,ssRNA negative-strand viruses,1,0
+Influenzavirus A Influenza A virus,940569,Viruses,ssRNA negative-strand viruses,1,0
+Influenzavirus A Influenza A virus,1777792,Viruses,ssRNA negative-strand viruses,1,1
+Influenzavirus A Influenza A virus,378142,Viruses,ssRNA negative-strand viruses,1,0
+Influenzavirus A Influenza A virus,425563,Viruses,ssRNA negative-strand viruses,1,0
+Influenzavirus A Influenza A virus,596489,Viruses,ssRNA negative-strand viruses,1,0
+Influenzavirus A Influenza A virus,425581,Viruses,ssRNA negative-strand viruses,1,0
+Influenzavirus A Influenza A virus,518922,Viruses,ssRNA negative-strand viruses,1,0
+Influenzavirus A Influenza A virus,1343787,Viruses,ssRNA negative-strand viruses,1,1
+Influenzavirus A Influenza A virus,947380,Viruses,ssRNA negative-strand viruses,1,1
+Influenzavirus A Influenza A virus,936099,Viruses,ssRNA negative-strand viruses,1,1
+Influenzavirus A Influenza A virus,381512,Viruses,ssRNA negative-strand viruses,1,0
+Influenzavirus A Influenza A virus,400788,Viruses,ssRNA negative-strand viruses,1,0
+Influenzavirus A Influenza A virus,9999998,Viruses,ssRNA negative-strand viruses,1,0
+Influenzavirus A Influenza A virus,641809,Viruses,ssRNA negative-strand viruses,1,0
+Influenzavirus A Influenza A virus,504904,Viruses,ssRNA negative-strand viruses,1,0
+Influenzavirus A Influenza A virus,192773,Viruses,ssRNA negative-strand viruses,1,1
+Influenzavirus A Influenza A virus,385583,Viruses,ssRNA negative-strand viruses,1,1
+Influenzavirus A Influenza A virus,506347,Viruses,ssRNA negative-strand viruses,1,1
+Influenzavirus A Influenza A virus,162536,Viruses,ssRNA negative-strand viruses,1,0
+Influenzavirus A Influenza A virus,398800,Viruses,ssRNA negative-strand viruses,1,0
+Influenzavirus A Influenza A virus,380985,Viruses,ssRNA negative-strand viruses,1,0
+Influenzavirus A Influenza A virus,411157,Viruses,ssRNA negative-strand viruses,1,0
+Influenzavirus A Influenza A virus,380212,Viruses,ssRNA negative-strand viruses,1,0
+Influenzavirus A Influenza A virus,393560,Viruses,ssRNA negative-strand viruses,1,0
+Influenzavirus A Influenza A virus,9999988,Viruses,ssRNA negative-strand viruses,1,1
+Influenzavirus A Influenza A virus,911246,Viruses,ssRNA negative-strand viruses,1,0
+Influenzavirus A Influenza A virus,9999989,Viruses,ssRNA negative-strand viruses,1,1
+Influenzavirus A Influenza A virus,363066,Viruses,ssRNA negative-strand viruses,1,1
+Influenzavirus A Influenza A virus,9999986,Viruses,ssRNA negative-strand viruses,1,0
+Influenzavirus A Influenza A virus,9999985,Viruses,ssRNA negative-strand viruses,1,0
+Influenzavirus A Influenza A virus,9999982,Viruses,ssRNA negative-strand viruses,1,1
+Influenzavirus A Influenza A virus,9999983,Viruses,ssRNA negative-strand viruses,1,0
+Influenzavirus A Influenza A virus,9999984,Viruses,ssRNA negative-strand viruses,1,0
+Influenzavirus A Influenza A virus,1129347,Viruses,ssRNA negative-strand viruses,1,0
+Influenzavirus B Influenza B virus,604436,Viruses,ssRNA negative-strand viruses,1,0
+Influenzavirus B Influenza B virus,9999997,Viruses,ssRNA negative-strand viruses,1,0
+Lentivirus Human immunodeficiency virus,12721,Viruses,ssRNA positive-strand virus,1,0
+Lymphocryptovirus Epstein-Barr virus (Human herpesvirus 4),10377,Viruses,"dsDNA viruses, no RNA stage",1,0
+Lyssavirus Rabies virus,445790,Viruses,ssRNA negative-strand viruses,1,0
+Marburgvirus Marburg marburgvirus,11269,Viruses,ssRNA negative-strand viruses,1,1
+Orthobunyavirus Apeu virus,334520,Viruses,ssRNA negative-strand viruses,1,0
+Orthobunyavirus Bwamba virus,35310,Viruses,ssRNA negative-strand viruses,1,0
+Orthobunyavirus California encephalitis virus,685450,Viruses,ssRNA negative-strand viruses,1,0
+Orthobunyavirus Pongola virus,537994,Viruses,ssRNA negative-strand viruses,1,0
+Orthobunyavirus Punta toro phlebovirus,11587,Viruses,ssRNA negative-strand viruses,1,0
+Orthohepadnavirus Hepatitis B virus,10407,Viruses,"dsDNA viruses, reverse-transcribing",1,0
+Orthopneumovirus Human orthopneumovirus,11259,Viruses,Monjiviricetes,1,0
+Parechovirus Human parechovirus,12063,Viruses,"ssRNA positive-strand viruses, no DNA stage",1,0
+Polymycovirus Aspergillus fumigatus polymycovirus 1,2250469,Viruses,dsRNA viruses,1,0
+Rubulavirus Mumps virus,11167,Viruses,ssRNA negative-strand viruses,1,0
+ecological metagenomes soil metagenome,410658,Viruses,metagenomes,1,1
+unclassified Coronavirinae Bat coronavirus,1508220,Viruses,Pisoniviricetes,1,0
+unclassified Coronavirinae Bat coronavirus,9999962,Viruses,Pisoniviricetes,1,1
+unclassified Megaviricetes unclassified,9999953,Viruses,Megaviricetes,1,0
+unclassified Redondoviridae Redondovirus D_HF5_1,3071204,Viruses,Arfiviricetes,1,0

@@ -1,0 +1,18 @@
+# Keep secrets, local state and confidential material out of the build context.
+.env
+.env.*
+.venv
+**/node_modules
+**/__pycache__
+.git
+.pytest_cache
+.ruff_cache
+purification-rescue-frontend/dist
+pdbaa
+# The dev job database.
+data/
+# Confidential peer-review material. The rest of docs/ isn't needed either.
+docs/publication_information/
+docs/
+tests/
+infra/

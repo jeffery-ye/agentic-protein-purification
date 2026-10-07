@@ -8,8 +8,9 @@
     </h2>
     
     <p class="mb-4 text-sm leading-relaxed">
-        This tool uses AI literature analysis to create and optimize purification protocols. 
-        Enter your protein sequence, UniProt ID, or SSGCID ID to identify similar protocols and optimize your purification.
+        This tool uses AI literature analysis to create and optimize purification protocols.
+        Enter your protein sequence, UniProt ID or SSGCID ID to find similar proteins, mine associated literature,
+        extract methods, and build an optimized protocol.
     </p>
 
     <AnalysisForm />

@@ -1,53 +1,26 @@
 """
 This is a pydanticai agent that extracts protein purification protocols from PMC articles
-"""                
+"""
+
+from typing import List
 
 from pydantic import BaseModel, Field
-from typing import List, Optional
 from pydantic_ai import Agent
-from ..llm import reasoning_model
 
-class BufferStep(BaseModel):
-    """
-    This class returns a tabular description of protocols, using pydantic's type validation to ensure consistent output
-    """
-    purification_step: Optional[str] = Field(
-        ...,
-        description=(
-            "A highly specific name for the purification step. "
-            "Combine the exact technique or resin name from the text with the action (e.g., Lysis, Wash, Elution). "
-            "Examples: 'Ni-NTA Affinity Chromatography - Wash', 'Cell Extraction'."
-        )
-    )
-    buffer_name: Optional[str] = Field(
-        None,
-        description="The specific name given to the buffer in the text, if any (e.g., 'Buffer A', 'Lysis Buffer')."
-    )
-    
-    buffer_composition: Optional[str] = Field(
-        None,
-        description="List buffering agents and their concentrations (e.g., '50 mM Tris', '20 mM HEPES'). If not specified, leave as null."
-    )
-    
-    ph: Optional[float] = Field(
-        None, 
-        description="The pH of the buffer, as a number (e.g., 8.0). If not mentioned, leave as null."
-    ) 
-    
-    salt_type: Optional[str] = Field(
-        None,
-        description="List ALL salts. For example: 'NaCl, MgCl2'."
-    )
-    
-    buffer_supplement: Optional[str] = Field(
-        None,
-        description="List additives present in the buffer like reducing agents (DTT), nucleotides (ATP), detergents, or cryoprotectants (glycerol). For example: '2 mM DTT, 30mM imidazole'."
-    )
+from ..llm import reasoning_model
+from ..models import BufferStep, ExtractedStep
+from ..trace import run_traced
+
 
 class PurificationProtocol(BaseModel):
-    steps: List[BufferStep] = Field(description="A list of all experimental steps from the text that use a defined buffer.")
-    
-    
+    steps: List[ExtractedStep] = Field(
+        description=(
+            "A list of all experimental steps from the text that use a defined buffer, "
+            "in the order the procedure performs them."
+        )
+    )
+
+
 class ProtocolAgent:
     def __init__(self):
         self.agent = Agent(
@@ -69,15 +42,17 @@ class ProtocolAgent:
                         *   **Source Text:** "...the M2 anti-FLAG affinity resin was washed three times with wash buffer..."
                         *   **CORRECT:** `"purification_step": "M2 anti-FLAG affinity resin - Wash"`
                         *   **INCORRECT:** `"purification_step": "Affinity column wash"`
-                4.  **Ignore Vague Steps:** If a buffer is mentioned but its composition is not detailed (e.g., "washed with PBS," "prepared according to the manufacturer's instructions"), disregard that step entirely. Only include steps with explicit component lists.
+                4.  **Salts with Concentrations (`salt_type`):** Give every salt with its concentration as the text states it (e.g., "300 mM NaCl, 5 mM MgCl2"), including the salt in binding, wash and elution buffers. Give a salt's name alone only when the text states no concentration for it.
+                5.  **Procedure Order:** List the steps in the order the procedure performs them.
+                6.  **Ignore Vague Steps:** If a buffer is mentioned but its composition is not detailed (e.g., "washed with PBS," "prepared according to the manufacturer's instructions"), disregard that step entirely. Only include steps with explicit component lists.
 
                 Process the following text and generate the JSON output.
                 """
             ),
         )
-    
-    def find_protocol(self, methods: str) -> List[dict]:
-        raw_output = self.agent.run_sync(methods).output
+
+    def find_protocol(self, methods: str) -> List[BufferStep]:
+        raw_output = run_traced(self.agent, "structuring", methods).output
         protocol_data = None
 
         if isinstance(raw_output, PurificationProtocol):
@@ -88,7 +63,11 @@ class ProtocolAgent:
 
         if protocol_data and protocol_data.steps:
             print(f"\nSuccessfully parsed protocol. Found {len(protocol_data.steps)} buffer steps.")
-            return [step.model_dump() for step in protocol_data.steps]
+            # Numbered here, not by the model, in the order it extracted them.
+            return [
+                BufferStep(**step.model_dump(), step_number=number)
+                for number, step in enumerate(protocol_data.steps, start=1)
+            ]
         else:
             print("\nCould not obtain structured data from the LLM")
             return []

@@ -1,0 +1,35 @@
+# Terminates TLS with Let's Encrypt and proxies to the app container. The
+# certificate is kept on the data volume (/data/caddy), so a replacement
+# instance reuses it; Let's Encrypt allows 5 a week per name. Uncomment the
+# staging CA while iterating.
+{
+	# acme_ca https://acme-staging-v02.api.letsencrypt.org/directory
+}
+
+# Your domain: the domain variable in infra/terraform.tfvars.
+app.example.org {
+	encode gzip
+
+	# Sign-in is the app's own (ADR-0009); Caddy terminates TLS and sets the
+	# browser security headers.
+	header {
+		Strict-Transport-Security "max-age=31536000"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+		Referrer-Policy "strict-origin-when-cross-origin"
+	}
+
+	# The SPA loads only its own scripts and styles; Bits UI sets inline style
+	# attributes, hence 'unsafe-inline' for styles alone. FastAPI's /docs pulls
+	# Swagger UI from a CDN, so it is left out rather than loosening the policy.
+	@app not path /docs* /redoc*
+	header @app Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+
+	# The largest real request is a 20,000-character FASTA plus as much failed
+	# purification text (#26); anything far past that is refused as a 413.
+	request_body {
+		max_size 256KB
+	}
+
+	reverse_proxy app:8000
+}

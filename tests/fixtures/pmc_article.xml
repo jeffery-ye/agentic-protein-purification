@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article article-type="research-article">
+  <front>
+    <article-meta>
+      <article-id pub-id-type="pmid">12345678</article-id>
+      <article-id pub-id-type="pmcid">PMC1234567</article-id>
+      <title-group>
+        <article-title>Crystal structure of a
+          <italic>Mycobacterium tuberculosis</italic>
+          kinase</article-title>
+      </title-group>
+      <abstract>
+        <p>First abstract paragraph.</p>
+        <p>Second abstract paragraph.</p>
+      </abstract>
+    </article-meta>
+  </front>
+  <body>
+    <sec>
+      <title>Introduction</title>
+      <p>Kinases are important. This paragraph must not be treated as methods.</p>
+    </sec>
+    <sec>
+      <title>Materials and Methods</title>
+      <p>Cells were lysed in 50 mM Tris pH 8.0 with 300 mM NaCl.</p>
+      <sec>
+        <title>Protein purification</title>
+        <p>The lysate was applied to Ni-NTA resin and eluted with 250 mM imidazole.</p>
+      </sec>
+    </sec>
+    <sec>
+      <title>Results</title>
+      <p>The structure was solved at 2.1 A.</p>
+      <sec>
+        <title>Purification of the selenomethionine derivative</title>
+        <p>SeMet protein was purified over a HiLoad Superdex 200 column.</p>
+      </sec>
+    </sec>
+  </body>
+</article>

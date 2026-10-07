@@ -1,0 +1,151 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "SSMPprParameters",
+      "Effect": "Allow",
+      "Action": [
+        "ssm:PutParameter", "ssm:GetParameter", "ssm:GetParameters", "ssm:GetParametersByPath",
+        "ssm:GetParameterHistory", "ssm:DeleteParameter", "ssm:DeleteParameters",
+        "ssm:AddTagsToResource", "ssm:RemoveTagsFromResource", "ssm:ListTagsForResource"
+      ],
+      "Resource": [
+        "arn:aws:ssm:us-east-1:*:parameter/ppr",
+        "arn:aws:ssm:us-east-1:*:parameter/ppr/*"
+      ]
+    },
+    {
+      "Sid": "SSMSessionsAndCommandsOnPprInstances",
+      "Effect": "Allow",
+      "Action": ["ssm:StartSession", "ssm:SendCommand"],
+      "Resource": "arn:aws:ec2:us-east-1:*:instance/*",
+      "Condition": {"StringEquals": {"ssm:resourceTag/Project": "ppr"}}
+    },
+    {
+      "Sid": "SSMSessionAndCommandDocuments",
+      "Effect": "Allow",
+      "Action": ["ssm:StartSession", "ssm:SendCommand"],
+      "Resource": [
+        "arn:aws:ssm:us-east-1:*:document/SSM-SessionManagerRunShell",
+        "arn:aws:ssm:us-east-1::document/AWS-RunShellScript"
+      ]
+    },
+    {
+      "Sid": "SSMOwnSessions",
+      "Effect": "Allow",
+      "Action": ["ssm:TerminateSession", "ssm:ResumeSession"],
+      "Resource": "arn:aws:ssm:us-east-1:*:session/${aws:username}-*"
+    },
+    {
+      "Sid": "SSMRead",
+      "Effect": "Allow",
+      "Action": [
+        "ssm:DescribeParameters", "ssm:DescribeInstanceInformation", "ssm:DescribeSessions",
+        "ssm:GetConnectionStatus", "ssm:ListCommands", "ssm:ListCommandInvocations",
+        "ssm:GetCommandInvocation"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "Route53ZoneAndHealthCheck",
+      "Effect": "Allow",
+      "Action": [
+        "route53:CreateHostedZone", "route53:GetHostedZone", "route53:DeleteHostedZone",
+        "route53:ListHostedZones", "route53:ListHostedZonesByName",
+        "route53:ListResourceRecordSets", "route53:ChangeResourceRecordSets", "route53:GetChange",
+        "route53:ListTagsForResource", "route53:ListTagsForResources", "route53:ChangeTagsForResource",
+        "route53:CreateHealthCheck", "route53:GetHealthCheck", "route53:UpdateHealthCheck",
+        "route53:DeleteHealthCheck", "route53:GetHealthCheckStatus", "route53:ListHealthChecks"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "LogsPprGroups",
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup", "logs:DeleteLogGroup", "logs:PutRetentionPolicy",
+        "logs:DeleteRetentionPolicy", "logs:TagResource", "logs:UntagResource",
+        "logs:ListTagsForResource", "logs:TagLogGroup", "logs:ListTagsLogGroup",
+        "logs:DescribeLogStreams", "logs:GetLogEvents", "logs:FilterLogEvents", "logs:StartLiveTail"
+      ],
+      "Resource": [
+        "arn:aws:logs:us-east-1:*:log-group:/ppr/*",
+        "arn:aws:logs:us-east-1:*:log-group:/ppr/*:*"
+      ]
+    },
+    {
+      "Sid": "LogsAndMetricsRead",
+      "Effect": "Allow",
+      "Action": ["logs:DescribeLogGroups", "cloudwatch:DescribeAlarms", "cloudwatch:GetMetricData"],
+      "Resource": "*"
+    },
+    {
+      "Sid": "AlarmsPpr",
+      "Effect": "Allow",
+      "Action": [
+        "cloudwatch:PutMetricAlarm", "cloudwatch:DeleteAlarms",
+        "cloudwatch:TagResource", "cloudwatch:UntagResource", "cloudwatch:ListTagsForResource"
+      ],
+      "Resource": "arn:aws:cloudwatch:us-east-1:*:alarm:ppr-*"
+    },
+    {
+      "Sid": "SNSPprTopics",
+      "Effect": "Allow",
+      "Action": [
+        "sns:CreateTopic", "sns:DeleteTopic", "sns:GetTopicAttributes", "sns:SetTopicAttributes",
+        "sns:Subscribe", "sns:Unsubscribe", "sns:GetSubscriptionAttributes",
+        "sns:SetSubscriptionAttributes", "sns:ListSubscriptionsByTopic",
+        "sns:TagResource", "sns:UntagResource", "sns:ListTagsForResource"
+      ],
+      "Resource": "arn:aws:sns:us-east-1:*:ppr-*"
+    },
+    {
+      "Sid": "BudgetsPpr",
+      "Effect": "Allow",
+      "Action": [
+        "budgets:ViewBudget", "budgets:ModifyBudget",
+        "budgets:ListTagsForResource", "budgets:TagResource", "budgets:UntagResource"
+      ],
+      "Resource": "arn:aws:budgets::*:budget/ppr-*"
+    },
+    {
+      "Sid": "BedrockConverseInference",
+      "Effect": "Allow",
+      "Action": [
+        "bedrock:InvokeModel", "bedrock:InvokeModelWithResponseStream", "bedrock:CountTokens",
+        "bedrock:GetFoundationModel", "bedrock:GetFoundationModelAvailability",
+        "bedrock:GetInferenceProfile"
+      ],
+      "Resource": [
+        "arn:aws:bedrock:*::foundation-model/*",
+        "arn:aws:bedrock:*:*:inference-profile/*"
+      ]
+    },
+    {
+      "Sid": "BedrockList",
+      "Effect": "Allow",
+      "Action": ["bedrock:ListFoundationModels", "bedrock:ListInferenceProfiles"],
+      "Resource": "*"
+    },
+    {
+      "Sid": "BedrockMantleInference",
+      "Effect": "Allow",
+      "Action": [
+        "bedrock-mantle:CreateInference", "bedrock-mantle:GetInference",
+        "bedrock-mantle:CountTokens", "bedrock-mantle:GetModel", "bedrock-mantle:ListModels",
+        "bedrock-mantle:GetProject", "bedrock-mantle:ListProjects"
+      ],
+      "Resource": "arn:aws:bedrock-mantle:us-east-1:*:project/*"
+    },
+    {
+      "Sid": "DenyBedrockApiKeys",
+      "Effect": "Deny",
+      "Action": [
+        "bedrock:CallWithBearerToken",
+        "bedrock-mantle:CallWithBearerToken",
+        "iam:CreateServiceSpecificCredential"
+      ],
+      "Resource": "*"
+    }
+  ]
+}

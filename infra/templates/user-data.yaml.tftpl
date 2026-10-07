@@ -1,0 +1,77 @@
+#cloud-config
+# Host setup for the single instance (ADR-0007). Changing anything here
+# replaces the instance (user_data_replace_on_change), which then starts the
+# last deployed image on its own from Parameter Store.
+
+swap:
+  filename: /swapfile
+  size: 2147483648
+
+package_update: false
+packages:
+  - docker
+  - amazon-ecr-credential-helper
+
+write_files:
+  - path: /opt/ppr/compose.yaml
+    permissions: "0644"
+    encoding: b64
+    content: ${compose}
+  - path: /opt/ppr/Caddyfile
+    permissions: "0644"
+    encoding: b64
+    content: ${caddyfile}
+  - path: /opt/ppr/ppr-start.sh
+    permissions: "0755"
+    encoding: b64
+    content: ${start_script}
+  - path: /etc/systemd/system/ppr.service
+    permissions: "0644"
+    encoding: b64
+    content: ${systemd_unit}
+  - path: /opt/ppr/ppr-data.sh
+    permissions: "0755"
+    encoding: b64
+    content: ${data_script}
+  - path: /etc/systemd/system/ppr-data.service
+    permissions: "0644"
+    encoding: b64
+    content: ${data_unit}
+  - path: /opt/ppr/ppr-backup.sh
+    permissions: "0755"
+    encoding: b64
+    content: ${backup_script}
+  - path: /etc/systemd/system/ppr-backup.service
+    permissions: "0644"
+    encoding: b64
+    content: ${backup_unit}
+  - path: /etc/systemd/system/ppr-backup.timer
+    permissions: "0644"
+    encoding: b64
+    content: ${backup_timer}
+  - path: /etc/systemd/system/ppr-alert@.service
+    permissions: "0644"
+    encoding: b64
+    content: ${alert_unit}
+  - path: /etc/systemd/system/docker.service.d/ppr-data.conf
+    permissions: "0644"
+    encoding: b64
+    content: ${docker_dropin}
+  - path: /root/.docker/config.json
+    permissions: "0600"
+    content: |
+      {"credsStore": "ecr-login"}
+
+runcmd:
+  - mkdir -p /usr/local/lib/docker/cli-plugins
+  - curl -fsSL -o /usr/local/lib/docker/cli-plugins/docker-compose https://github.com/docker/compose/releases/download/${compose_version}/docker-compose-linux-aarch64
+  - echo "${compose_sha256}  /usr/local/lib/docker/cli-plugins/docker-compose" | sha256sum -c -
+  - chmod 0755 /usr/local/lib/docker/cli-plugins/docker-compose
+  # Loads the units and docker's drop-in before anything starts.
+  - systemctl daemon-reload
+  - systemctl enable ppr-data.service ppr-backup.timer
+  # Docker, and so ppr, wait for the data volume, which Terraform attaches
+  # after boot (#24, #100).
+  - systemctl enable --now docker
+  - systemctl start ppr-backup.timer
+  - systemctl enable --now ppr.service

@@ -1,0 +1,27 @@
+[Unit]
+Description=Purification Rescue Agent stack
+# The app never starts against an empty /data (#24).
+Requires=docker.service ppr-data.service
+After=docker.service ppr-data.service network-online.target
+Wants=network-online.target
+# Retries below ride out a short SSM, ECR or network outage at boot (#100),
+# then give up; the uptime alarm covers the rest. Restart= on a oneshot unit
+# needs systemd 244 or later, and Amazon Linux 2023 has 252.
+StartLimitIntervalSec=1h
+StartLimitBurst=20
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=/opt/ppr
+Environment=ECR_REPO=${ecr_repo}
+Environment=HOME=/root
+ExecStartPre=/opt/ppr/ppr-start.sh
+ExecStart=/bin/sh -c 'if grep -q "^APP_IMAGE=unset" .env; then docker compose up -d caddy; else docker compose up -d --remove-orphans; fi'
+ExecStop=/usr/bin/docker compose down
+TimeoutStartSec=600
+Restart=on-failure
+RestartSec=1min
+
+[Install]
+WantedBy=multi-user.target
